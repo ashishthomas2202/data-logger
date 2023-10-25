@@ -1,8 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
+const server = require("./server");
 const path = require("path");
 const isDev = require("electron-is-dev");
-const { config } = require("../utils/initialization");
-
 let mainWindow;
 
 function createWindow() {
@@ -12,21 +11,24 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, "preload.js"),
+      // preload: path.join(__dirname, "preload.js"),
     },
   });
 
-  console.log("preload link", path.join(__dirname, "preload.js"));
+  // console.log("preload link", path.join(__dirname, "preload.js"));
 
   const root = isDev
     ? "http://localhost:5173/"
     : `file://${path.join(__dirname, "../dist/index.html")}`;
 
-  if (!config.initialized) {
-    mainWindow.loadURL(`${root}initialize`);
-  } else {
-    mainWindow.loadURL(root);
-  }
+  // if (!config.initialized) {
+  //   mainWindow.loadURL(`${root}initialize`);
+  // } else {
+  //   mainWindow.loadURL(root);
+  // }
+
+  mainWindow.loadURL(root);
+
   // close the window
   mainWindow.on("closed", () => {
     mainWindow = null;
@@ -53,7 +55,7 @@ app.on("activate", () => {
   }
 });
 
-ipcMain.handle("get-tasks", async (event) => {
-  console.log("handle:get-tasks", config.tasks);
-  return config.tasks;
-});
+// ipcMain.handle("get-tasks", async (event) => {
+//   console.log("handle:get-tasks", config.tasks);
+//   return config.tasks;
+// });
