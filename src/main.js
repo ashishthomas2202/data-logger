@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const server = require("./server");
 const path = require("path");
 const isDev = require("electron-is-dev");
@@ -8,10 +8,11 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,
     height: 680,
+    minWidth: 350,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      // preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "preload.js"),
     },
   });
 
@@ -55,6 +56,16 @@ app.on("activate", () => {
   }
 });
 
+ipcMain.handle("open-directory-dialog", async (event) => {
+  const result = await dialog.showOpenDialog(mainWindow, {
+    properties: ["openDirectory"],
+  });
+  if (result.canceled) {
+    return null; // User cancelled the dialog
+  } else {
+    return result.filePaths[0]; // The path of the selected directory
+  }
+});
 // ipcMain.handle("get-tasks", async (event) => {
 //   console.log("handle:get-tasks", config.tasks);
 //   return config.tasks;

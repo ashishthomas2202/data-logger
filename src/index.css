@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -5,13 +9,36 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #03092a;
+  background-color: #002e4e;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+/* Scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+  padding: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
 }
 
 a {
@@ -29,6 +56,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  max-width: 100vw;
 }
 
 h1 {
@@ -37,24 +65,37 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 0.25rem;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #219ebc;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: 0.25s ease;
+  color: #002e4e;
 }
 button:hover {
-  border-color: #646cff;
+  background-color: #1a849e;
+  border-color: #1a849e;
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+input {
+  background-color: #001523;
+  border-color: #001523;
+  padding: 1rem;
+}
+select {
+  width: 100%;
+  background-color: #001523;
+  padding: 1rem;
+  border-radius: 0.25rem;
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -64,6 +105,15 @@ button:focus-visible {
     color: #747bff;
   }
   button {
+    background-color: #002e4e;
+    color: #ffffff;
+  }
+  button:hover {
+    background-color: #013d68;
+  }
+
+  input {
     background-color: #f9f9f9;
+    /* border-color: #001523; */
   }
 }

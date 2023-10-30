@@ -6,7 +6,7 @@ const router = express.Router();
 // Routes
 const taskRoute = require("../server/routes/tasks");
 
-const port = process.env.SERVER_PORT || 5173;
+const port = process.env.SERVER_PORT || 5174;
 
 // app.get("/", (req, res) => {
 //   res.send("Hello World!");
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use("/api/tasks", taskRoute);
 
 app.listen(port, () => {
-  console.log("Server is running on port " + port + "...");
+  console.log("Server is running on port" + port + "...");
 });
 
 module.exports = app;

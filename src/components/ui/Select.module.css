@@ -1,0 +1,48 @@
+.customSelect {
+  width: 100%;
+}
+
+.customSelect select {
+  display: none;
+}
+
+.selected {
+  background-color: #001523;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  flex-grow: 1;
+  text-align: center;
+}
+.icon {
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.option {
+  background-color: #001523;
+  padding: 0.5rem 0;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: #011928;
+}
+
+.options {
+  width: 100%;
+  max-height: 150px;
+  padding: 0.25;
+  background-color: #001523;
+  border-radius: 0.25rem;
+  margin-top: 0.2rem;
+  overflow-y: scroll;
+  transition: all 0.2s;
+}

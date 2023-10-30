@@ -10,7 +10,10 @@ export default function Home() {
       exit={{ opacity: 0 }}
       transition={{ duration: 1, delay: 1 }}
     >
-      This is Home page <Link to="/initialize">Initialize</Link>
+      This is Home page
+      <Link to="/initialize">Initialize</Link>
+      <br />
+      <Link to="/tasks/create">Create Task</Link>
     </motion.div>
   );
 }
