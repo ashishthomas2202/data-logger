@@ -26,23 +26,22 @@
 }
 
 .option {
-  background-color: #001523;
+  background-color: #002037;
   padding: 0.5rem 0;
   transition: all 0.2s;
   cursor: pointer;
 }
 
 .option:hover {
-  background-color: #011928;
+  background-color: #00406d;
 }
 
 .options {
+  background-color: #002037;
   width: 100%;
   max-height: 150px;
   padding: 0.25;
-  background-color: #001523;
   border-radius: 0.25rem;
-  margin-top: 0.2rem;
   overflow-y: scroll;
   transition: all 0.2s;
 }

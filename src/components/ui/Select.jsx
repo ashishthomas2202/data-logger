@@ -37,6 +37,7 @@ export default function Select({ children, ...props }) {
       <div
         className={styles.options}
         style={{
+          marginTop: dropdownState ? "0.1rem" : "0",
           visibility: dropdownState ? "visible" : "hidden",
           opacity: dropdownState ? 1 : 0,
           maxHeight: dropdownState ? "150px" : "0",
@@ -48,7 +49,7 @@ export default function Select({ children, ...props }) {
               return (
                 <div
                   className={styles.option}
-                  key={option.value + props.key ? props.key : i}
+                  key={option.value + (props.key ? props.key : i)}
                   onClick={() => {
                     setSelected(i);
                     setDropdownState(false);
