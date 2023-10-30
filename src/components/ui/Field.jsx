@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Select from "./Select";
 import { FaTimes } from "react-icons/fa";
 
-export default function Field({ field, setFields }) {
+export default function Field({ field, setFields, id, handleRemove }) {
   return (
     <div className="px-5 flex flex-col gap-3 sm:flex-row">
       <div className="flex flex-col items-start w-full ">
@@ -35,8 +35,7 @@ export default function Field({ field, setFields }) {
         <button
           type="button"
           className="flex justify-center items-center gap-3 bg-red-700 hover:bg-red-600 hover:border-red-600 text-white font-semibold mt-2 sm:mt-5 py-3.5 w-full"
-
-          //   className="flex justify-center items-center gap-3 bg-red-700 hover:bg-red-600 hover:border-red-600 text-white font-semibold rounded-md w-full md:w-1/4 self-end py-3.5"
+          onClick={handleRemove}
         >
           <FaTimes />
           Remove

@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import _ from "lodash";
 import Field from "../../ui/Field";
 
 export default function CreateTask() {
   const [taskName, setTaskName] = useState("");
   const [fields, setFields] = useState([]);
+
+  useEffect(() => {
+    console.log(fields, _.uniqueId());
+  }, [fields]);
   return (
     <div>
       <h1 className="mb-3">Create Task</h1>
@@ -27,9 +32,27 @@ export default function CreateTask() {
         {fields.map((field, index) => {
           return (
             <Field
-              key={"create" + index}
+              key={"create-" + field.id}
+              id={field.id}
               field={field.name}
               setFields={field.type}
+              handleRemove={() =>
+                setFields((prevFields) =>
+                  prevFields.filter((prevField) => prevField.id !== field.id)
+                )
+              }
+              // handleRemove={() => {
+              //   console.log("remove", field.id);
+              //   setFields((prevFields) => {
+              //     const filteredFields = prevFields.filter(
+              //       (prevField) => prevField.id !== field.id
+              //     );
+              //     return filteredFields.map((filteredField, i) => ({
+              //       ...filteredField,
+              //       id: i,
+              //     }));
+              //   });
+              // }}
             />
           );
         })}
@@ -38,8 +61,10 @@ export default function CreateTask() {
           type="button"
           className="px-5 w-full bg-blue-100 hover:bg-blue-200 sm:w-1/2 self-center mb-3"
           onClick={() => {
-            console.log("clicked", fields);
-            setFields((prevFields) => [...prevFields, { name: "", type: "" }]);
+            setFields((prevFields) => [
+              ...prevFields,
+              { id: _.uniqueId(), name: "", type: "" },
+            ]);
           }}
         >
           Add Fields
