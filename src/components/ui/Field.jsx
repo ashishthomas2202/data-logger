@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Checkbox from "./Checkbox";
 import Select from "./Select";
 import { FaTimes } from "react-icons/fa";
 
@@ -12,35 +13,50 @@ export default function Field({
 }) {
   return (
     <div className="px-5 flex flex-col gap-3 sm:flex-row">
-      <div className="flex flex-col items-start w-full ">
-        <label htmlFor="fieldname" className="text-sm">
+      <div className="flex flex-col flex-1 items-center w-full mr-3">
+        <label htmlFor={"required" + id} className="text-sm">
+          Required:
+        </label>
+        <Checkbox
+          id={"required" + id}
+          className={"bg-red-500 mt-3"}
+          value={field.required}
+          onChange={() => {
+            handleChange({ ...field, required: !field.required });
+          }}
+        />
+      </div>
+      <div className="flex flex-col items-start w-full">
+        <label htmlFor={"fieldname" + id} className="text-sm">
           Field Name:
         </label>
         <input
           className="w-full p-4 rounded"
           type="text"
-          name="fieldname"
-          id="fieldname"
+          name={"fieldname" + id}
+          id={"fieldname" + id}
           placeholder="Field Name"
           value={field.name}
           onChange={(e) => {
             let newData = { ...field, name: e.target.value };
             handleChange(newData);
           }}
+          required
         />
       </div>
       <div className="flex flex-col items-start w-full ">
-        <label className="text-sm">Field Type:</label>
+        <label htmlFor={"fieldtype" + id} className="text-sm">
+          Field Type:
+        </label>
         <Select
           value={field.type}
+          id={"fieldtype" + id}
           onChange={(value) => {
             let newData = { ...field, type: value };
             handleChange(newData);
           }}
+          required
         >
-          <option default hidden>
-            Select a type
-          </option>
           <option value={"text"}>Text</option>
           <option value={"number"}>Numbers</option>
           <option value={"money"}>Money</option>
@@ -52,7 +68,7 @@ export default function Field({
       <div className="flex flex-col items-start">
         <button
           type="button"
-          className="flex justify-center items-center gap-3 bg-red-700 hover:bg-red-600 hover:border-red-600 text-white font-semibold mt-2 sm:mt-5 py-3.5 w-full"
+          className="flex justify-center items-center gap-3 bg-red-500 hover:bg-red-400 hover:border-red-400 text-white font-semibold mt-2 sm:mt-5 py-3.5 w-full"
           onClick={handleRemove}
         >
           <FaTimes />

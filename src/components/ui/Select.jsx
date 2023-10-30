@@ -2,7 +2,14 @@ import React, { useEffect, useState, useRef } from "react";
 import styles from "./Select.module.css";
 import { FaChevronDown } from "react-icons/fa";
 
-export default function Select({ children, value, onChange, ...props }) {
+export default function Select({
+  children,
+  id,
+  value,
+  onChange,
+  required,
+  ...props
+}) {
   const selectRef = useRef(null);
   const [options, setOptions] = useState([{ value: "" }]);
   const [selected, setSelected] = useState(0);
@@ -26,7 +33,7 @@ export default function Select({ children, value, onChange, ...props }) {
 
   return (
     <div className={styles.customSelect}>
-      <select ref={selectRef} defaultValue={selected}>
+      <select id={id} ref={selectRef} defaultValue={selected} required>
         {children}
       </select>
       <div className={styles.selected} onClick={handleClick}>

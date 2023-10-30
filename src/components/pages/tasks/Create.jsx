@@ -5,8 +5,8 @@ import Field from "../../ui/Field";
 export default function CreateTask() {
   const [taskName, setTaskName] = useState("");
   const [fields, setFields] = useState([
-    { id: "54", name: "Name", type: "text" },
-    { id: "20", name: "Documents", type: "files" },
+    { id: "54", name: "Name", type: "text", required: true },
+    { id: "20", name: "Documents", type: "files", required: false },
   ]);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function CreateTask() {
           onClick={() => {
             setFields((prevFields) => [
               ...prevFields,
-              { id: _.uniqueId(), name: "", type: "" },
+              { id: _.uniqueId(), name: "", type: "", required: false },
             ]);
           }}
         >
