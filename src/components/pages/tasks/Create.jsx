@@ -12,10 +12,27 @@ export default function CreateTask() {
   useEffect(() => {
     console.log(fields);
   }, [fields]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (fields.length == 0) {
+      alert("Please add at least one field");
+    } else {
+      let data = {
+        task: taskName,
+        fields: fields,
+      };
+      console.log(data);
+    }
+  };
+
   return (
     <div>
       <h1 className="mb-3">Create Task</h1>
-      <form className="w-screen p-5 max-w-5xl flex flex-col gap-y-3">
+      <form
+        onSubmit={handleSubmit}
+        className="w-screen p-5 max-w-5xl flex flex-col gap-y-3"
+      >
         <div className="flex flex-col items-start w-full mb-3 ">
           <label className="text-lg font-semibold" htmlFor="taskname">
             Task Name:{" "}
@@ -26,6 +43,9 @@ export default function CreateTask() {
             name="taskname"
             id="taskname"
             placeholder="Task Name"
+            value={taskName}
+            onChange={(e) => setTaskName(e.target.value)}
+            required
           />
         </div>
         <div className="flex flex-col items-start w-full ">
@@ -68,7 +88,12 @@ export default function CreateTask() {
           Add Fields
         </button>
 
-        <button className="w-full md:w-1/2 self-center">Create</button>
+        <button
+          type="submit"
+          className="w-full md:w-1/2 bg-cyan-500 hover:bg-cyan-400 self-center"
+        >
+          Create
+        </button>
       </form>
     </div>
   );
