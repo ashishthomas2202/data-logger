@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import Select from "./Select";
 import { FaTimes } from "react-icons/fa";
 
-export default function Field({ field, setFields, id, handleRemove }) {
+export default function Field({
+  field,
+  setFields,
+  id,
+  handleChange,
+  handleRemove,
+  onChange,
+}) {
   return (
     <div className="px-5 flex flex-col gap-3 sm:flex-row">
       <div className="flex flex-col items-start w-full ">
@@ -15,11 +22,22 @@ export default function Field({ field, setFields, id, handleRemove }) {
           name="fieldname"
           id="fieldname"
           placeholder="Field Name"
+          value={field.name}
+          onChange={(e) => {
+            let newData = { ...field, name: e.target.value };
+            handleChange(newData);
+          }}
         />
       </div>
       <div className="flex flex-col items-start w-full ">
         <label className="text-sm">Field Type:</label>
-        <Select>
+        <Select
+          value={field.type}
+          onChange={(value) => {
+            let newData = { ...field, type: value };
+            handleChange(newData);
+          }}
+        >
           <option default hidden>
             Select a type
           </option>

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import styles from "./Select.module.css";
 import { FaChevronDown } from "react-icons/fa";
 
-export default function Select({ children, ...props }) {
+export default function Select({ children, value, onChange, ...props }) {
   const selectRef = useRef(null);
   const [options, setOptions] = useState([{ value: "" }]);
   const [selected, setSelected] = useState(0);
@@ -11,7 +11,13 @@ export default function Select({ children, ...props }) {
   useEffect(() => {
     const optionsList = Array.apply(null, selectRef.current.options);
     setOptions(optionsList);
-    setSelected(selectRef.current.selectedIndex);
+
+    let valueIndex = optionsList.findIndex((option) => option.value == value);
+    if (valueIndex == -1) {
+      valueIndex = 0;
+    }
+    console.log(value, valueIndex);
+    setSelected(valueIndex);
   }, []);
 
   const handleClick = () => {
@@ -53,6 +59,7 @@ export default function Select({ children, ...props }) {
                   onClick={() => {
                     setSelected(i);
                     setDropdownState(false);
+                    onChange(option.value);
                   }}
                 >
                   {option.value}

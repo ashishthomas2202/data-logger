@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import _ from "lodash";
+import _, { set } from "lodash";
 import Field from "../../ui/Field";
 
 export default function CreateTask() {
   const [taskName, setTaskName] = useState("");
-  const [fields, setFields] = useState([]);
+  const [fields, setFields] = useState([
+    { id: "54", name: "Name", type: "text" },
+    { id: "20", name: "Documents", type: "files" },
+  ]);
 
   useEffect(() => {
-    console.log(fields, _.uniqueId());
+    console.log(fields);
   }, [fields]);
   return (
     <div>
@@ -34,25 +37,20 @@ export default function CreateTask() {
             <Field
               key={"create-" + field.id}
               id={field.id}
-              field={field.name}
-              setFields={field.type}
+              field={field}
+              handleChange={(newData) =>
+                setFields((prevFields) =>
+                  prevFields.map((prevField) =>
+                    prevField.id == field.id ? newData : prevField
+                  )
+                )
+              }
               handleRemove={() =>
                 setFields((prevFields) =>
                   prevFields.filter((prevField) => prevField.id !== field.id)
                 )
               }
-              // handleRemove={() => {
-              //   console.log("remove", field.id);
-              //   setFields((prevFields) => {
-              //     const filteredFields = prevFields.filter(
-              //       (prevField) => prevField.id !== field.id
-              //     );
-              //     return filteredFields.map((filteredField, i) => ({
-              //       ...filteredField,
-              //       id: i,
-              //     }));
-              //   });
-              // }}
+              onChange={() => {}}
             />
           );
         })}
