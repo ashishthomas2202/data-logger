@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import Page from "../ui/Page";
 
-export default function Home() {
+export default function Dashboard() {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1, delay: 1 }}
-    >
-      This is Home page
+    <Page>
+      This is Dashboard page
       <Link to="/initialize">Initialize</Link>
       <br />
       <Link to="/tasks/create">Create Task</Link>
-    </motion.div>
+    </Page>
   );
 }

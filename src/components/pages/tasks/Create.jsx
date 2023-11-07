@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import _, { set } from "lodash";
+import Page from "../../ui/Page";
 import Field from "../../ui/Field";
 
 export default function CreateTask() {
@@ -27,12 +28,9 @@ export default function CreateTask() {
   };
 
   return (
-    <div>
+    <Page>
       <h1 className="mb-3">Create Task</h1>
-      <form
-        onSubmit={handleSubmit}
-        className="w-screen p-5 max-w-5xl flex flex-col gap-y-3"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col gap-y-3">
         <div className="flex flex-col items-start w-full mb-3 ">
           <label className="text-lg font-semibold" htmlFor="taskname">
             Task Name:{" "}
@@ -95,6 +93,6 @@ export default function CreateTask() {
           Create
         </button>
       </form>
-    </div>
+    </Page>
   );
 }

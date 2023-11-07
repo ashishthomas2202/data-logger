@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+
 const server = require("./server");
 const path = require("path");
 const isDev = require("electron-is-dev");
@@ -8,7 +9,10 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,
     height: 680,
+    // frame: false,
+    // transparent: true,
     minWidth: 350,
+    minHeight: 350,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -36,11 +40,12 @@ function createWindow() {
   });
 
   // open dev tools
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 }
 
 // create the window on electron initialization
 app.whenReady().then(() => createWindow());
+// app.on("ready", () => setTimeout(createWindow, 3000));
 
 // quit the app when all windows are closed (Windows & Linux)
 app.on("window-all-closed", () => {

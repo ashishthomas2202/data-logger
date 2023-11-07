@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
-
+import Page from "../ui/Page";
 export default function Initialize() {
   const handleSelectDirectory = async () => {
     if (typeof window !== "undefined") {
@@ -29,14 +29,9 @@ export default function Initialize() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1, delay: 1 }}
-    >
-      This is Initialize page <Link to="/">Home</Link>
+    <Page>
+      This is Initialize page <Link to="/">Dashboard</Link>
       <button onClick={handleSelectDirectory}>Select Directory</button>
-    </motion.div>
+    </Page>
   );
 }

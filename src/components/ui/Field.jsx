@@ -12,7 +12,7 @@ export default function Field({
   onChange,
 }) {
   return (
-    <div className="px-5 flex flex-col gap-3 sm:flex-row">
+    <div className="px-5 flex flex-col gap-3 border-2 sm:border-0 p-3 rounded sm:flex-row ">
       <div className="flex flex-col flex-1 items-center w-full mr-3">
         <label htmlFor={"required" + id} className="text-sm">
           Required:
