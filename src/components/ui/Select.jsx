@@ -5,6 +5,7 @@ import { FaChevronDown } from "react-icons/fa";
 export default function Select({
   children,
   id,
+  className = "",
   value,
   onChange,
   required,
@@ -32,14 +33,22 @@ export default function Select({
   };
 
   return (
-    <div className={styles.customSelect}>
-      <select id={id} ref={selectRef} defaultValue={selected} required>
+    <div className={`w-full dark:text-gray-950 ${className}`}>
+      <select
+        id={id}
+        className="hidden"
+        ref={selectRef}
+        defaultValue={selected}
+        required
+      >
         {children}
       </select>
-      <div className={styles.selected} onClick={handleClick}>
-        <div className={styles.label}>{options[selected].value}</div>
+      <div
+        className="bg-gray-100 rounded-md flex space-between items-center p-4"
+        onClick={handleClick}
+      >
+        <div className="flex-1 text-center">{options[selected].value}</div>
         <div
-          className={styles.icon}
           style={{
             transform: dropdownState ? "rotate(180deg)" : "rotate(0deg)",
           }}
@@ -48,7 +57,7 @@ export default function Select({
         </div>
       </div>
       <div
-        className={styles.options}
+        className="bg-gray-100 p-1 rounded-md overflow-y-scroll w-full max-h-7 transition-all"
         style={{
           marginTop: dropdownState ? "0.1rem" : "0",
           visibility: dropdownState ? "visible" : "hidden",
@@ -61,7 +70,7 @@ export default function Select({
             if (!option.hidden)
               return (
                 <div
-                  className={styles.option}
+                  className="bg-gray-100 hover:bg-gray-50 dark:hover:bg-gray-200 text-center py-2 cursor-pointer transition-all"
                   key={option.value + (props.key ? props.key : i)}
                   onClick={() => {
                     setSelected(i);
