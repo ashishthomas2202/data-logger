@@ -91,11 +91,11 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-input {
+/* input {
   background-color: #001523;
   border-color: #001523;
   padding: 1rem;
-}
+} */
 select {
   width: 100%;
   background-color: #001523;
@@ -116,10 +116,5 @@ select {
   }
   button:hover {
     background-color: #013d68;
-  }
-
-  input {
-    background-color: #f9f9f9;
-    /* border-color: #001523; */
   }
 }
