@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Input from "./Input";
 import Checkbox from "./Checkbox";
 import Select from "./Select";
+import Button from "./Button";
 import { FaTimes } from "react-icons/fa";
 
 export default function Field({
@@ -65,14 +66,22 @@ export default function Field({
         </Select>
       </div>
       <div className="flex flex-col items-start">
-        <button
+        {/* <button
           type="button"
           className="flex justify-center items-center gap-3 bg-red-500 hover:bg-red-400 hover:border-red-400 text-white font-semibold mt-2 sm:mt-5 py-3.5 w-full"
           onClick={handleRemove}
         >
           <FaTimes />
           Remove
-        </button>
+        </button> */}
+        <Button
+          className="w-full mt-5 py-3.5"
+          variant="danger"
+          onClick={handleRemove}
+        >
+          <FaTimes />
+          Remove
+        </Button>
       </div>
     </div>
   );

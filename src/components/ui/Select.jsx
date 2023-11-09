@@ -43,7 +43,7 @@ export default function Select({
         {children}
       </select>
       <div
-        className="bg-gray-100 rounded-md flex space-between items-center p-4"
+        className="bg-white rounded-lg flex space-between items-center p-4"
         onClick={handleClick}
       >
         <div className="flex-1 text-center">{options[selected].value}</div>
@@ -56,7 +56,7 @@ export default function Select({
         </div>
       </div>
       <div
-        className="bg-gray-100 p-1 rounded-md overflow-y-scroll w-full max-h-7 transition-all"
+        className="bg-white p-1 rounded-lg overflow-y-scroll w-full max-h-7 transition-all"
         style={{
           marginTop: dropdownState ? "0.1rem" : "0",
           visibility: dropdownState ? "visible" : "hidden",
@@ -70,8 +70,8 @@ export default function Select({
               return (
                 <div
                   className={`${
-                    value == option.value && "bg-gray-200 dark:bg-gray-50"
-                  } bg-gray-100 hover:bg-gray-50 dark:hover:bg-gray-200 text-center py-2 cursor-pointer transition-all`}
+                    value == option.value && "bg-slate-200 dark:bg-gray-50"
+                  } bg-white hover:bg-gray-50 dark:hover:bg-gray-200 text-center py-2 cursor-pointer transition-all`}
                   key={option.value + (props.key ? props.key : i)}
                   onClick={() => {
                     setSelected(i);

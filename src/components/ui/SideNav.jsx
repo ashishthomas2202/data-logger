@@ -21,11 +21,11 @@ export default function SideNav({ links }) {
                       before:content-[''] before:w-[20px] before:h-[20px] before:bg-gray-950 before:absolute before:top-[-20px] before:right-0 before:rounded-br-[10px] before:z-10
                       after:content-[''] after:w-[20px] after:h-[20px] after:bg-gray-950 after:absolute after:top-[40px] after:right-0 after:rounded-tr-[10px] after:z-10`
                       : "text-white") +
-                    " h-[40px] md:pl-3 py-2 rounded-l-lg flex justify-center md:justify-start items-center gap-2"
+                    " h-[40px] md:pl-3 py-2 rounded-l-lg flex justify-center md:justify-start items-center gap-2 "
                   }
                 >
                   {location.pathname == link.to && (
-                    <span className="w-[20px] h-[20px] bg-white absolute top-[-20px] right-0 z-0 dark:bg-gray-900"></span>
+                    <span className="w-[19px] h-[19px] bg-white absolute top-[-19px] right-0 z-0 dark:bg-gray-900"></span>
                   )}
                   {link?.icon && (
                     <span className="text-lg z-20">{link.icon}</span>
@@ -34,7 +34,7 @@ export default function SideNav({ links }) {
 
                   {/* {link.name} */}
                   {location.pathname == link.to && (
-                    <span className="w-[20px] h-[20px] bg-white absolute top-[40px] right-0 z-0 dark:bg-gray-900"></span>
+                    <span className="w-[19px] h-[19px] bg-white absolute top-[39px] right-0 z-0 dark:bg-gray-900"></span>
                   )}
                 </div>
               </Link>
