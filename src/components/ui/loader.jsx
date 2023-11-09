@@ -8,7 +8,7 @@ export default function Loader() {
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
       transition={{ duration: 0.8, type: "Spring" }}
-      className="loader"
+      className="loader border-[3px] border-color-gray-200 dark:border-color-white"
     ></motion.span>
   );
 }

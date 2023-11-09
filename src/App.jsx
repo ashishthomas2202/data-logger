@@ -8,7 +8,7 @@ import Settings from "./components/pages/Settings";
 import Initialize from "./components/pages/Initialize";
 import Tasks from "./components/pages/tasks/Tasks";
 import CreateTask from "./components/pages/tasks/Create";
-import ReadTask from "./components/pages/tasks/Read";
+import ManageTask from "./components/pages/tasks/Manage";
 import UpdateTask from "./components/pages/tasks/Update";
 import DeleteTask from "./components/pages/tasks/Delete";
 
@@ -30,7 +30,7 @@ function App() {
       icon: <BsListNested />,
       links: [
         { name: "Create", to: "/tasks/create", icon: <BsPlusCircle /> },
-        { name: "Read", to: "/tasks/read", icon: <BsBook /> },
+        { name: "Manage", to: "/tasks/manage", icon: <BsBook /> },
         { name: "Update", to: "/tasks/update", icon: <BsArrowRepeat /> },
         { name: "Delete", to: "/tasks/delete", icon: <BsTrash /> },
       ],
@@ -52,7 +52,7 @@ function App() {
               <Route path="/initialize" Component={Initialize} />
               <Route exact path="/tasks" Component={Tasks} />
               <Route exact path="/tasks/create" Component={CreateTask} />
-              <Route exact path="/tasks/read" Component={ReadTask} />
+              <Route exact path="/tasks/manage" Component={ManageTask} />
               <Route exact path="/tasks/update" Component={UpdateTask} />
               <Route exact path="/tasks/delete" Component={DeleteTask} />
             </Routes>
