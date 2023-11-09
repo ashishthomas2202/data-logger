@@ -9,7 +9,7 @@ export default function Checkbox({
 }) {
   return (
     <div
-      className={`w-7 h-7 rounded-md border-2 border-red-500 flex justify-center items-center dark:bg-red-500 ${className}`}
+      className={`w-7 h-7 rounded-md border-2 bg-white border-red-500 flex justify-center items-center dark:bg-red-500 ${className}`}
       onClick={() => {
         onChange();
       }}

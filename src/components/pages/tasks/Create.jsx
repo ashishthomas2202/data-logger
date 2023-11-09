@@ -4,7 +4,7 @@ import Page from "../../ui/Page";
 import Card from "../../ui/Card";
 import Input from "../../ui/Input";
 import Field from "../../ui/Field";
-
+import Button from "../../ui/Button";
 export default function CreateTask() {
   const [taskName, setTaskName] = useState("");
   const [fields, setFields] = useState([
@@ -76,9 +76,9 @@ export default function CreateTask() {
             );
           })}
 
-          <button
-            type="button"
-            className="px-5 w-full bg-blue-100 hover:bg-blue-200 sm:w-1/2 self-center mb-3"
+          <Button
+            className="w-full md:w-1/2 self-center"
+            variant="secondary"
             onClick={() => {
               setFields((prevFields) => [
                 ...prevFields,
@@ -87,14 +87,10 @@ export default function CreateTask() {
             }}
           >
             Add Fields
-          </button>
-
-          <button
-            type="submit"
-            className="w-full md:w-1/2 bg-cyan-500 hover:bg-cyan-400 self-center"
-          >
-            Create
-          </button>
+          </Button>
+          <Button className="w-full md:w-1/2 self-center" type="submit">
+            Create Task
+          </Button>
         </form>
       </Card>
     </Page>
