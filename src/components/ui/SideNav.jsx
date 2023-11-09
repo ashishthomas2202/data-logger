@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./SideNav.module.css";
+import "./SideNav.css";
 import { Link, useLocation } from "react-router-dom";
 import { FaFileMedicalAlt } from "react-icons/fa";
 export default function SideNav({ links }) {
@@ -14,12 +14,20 @@ export default function SideNav({ links }) {
               <Link to={link.to}>
                 <div
                   className={
-                    (location.pathname == link.to ? "bg-gray-900" : "") +
-                    " pl-3 py-2 rounded-l-lg  text-white flex items-center gap-2"
+                    (location.pathname == link.to
+                      ? `bg-white dark:bg-gray-900 active text-black dark:text-white`
+                      : "text-white") +
+                    " pl-3 py-2 rounded-l-lg flex items-center gap-2"
                   }
                 >
+                  {location.pathname == link.to && (
+                    <span className="before"></span>
+                  )}
                   {link?.icon && link.icon}
                   {link.name}
+                  {location.pathname == link.to && (
+                    <span className="after"></span>
+                  )}
                 </div>
               </Link>
               {link?.links && nestedLinks(link.links)}
@@ -30,8 +38,8 @@ export default function SideNav({ links }) {
     );
   };
   return (
-    <div className={styles.sideNav + " bg-gray-950"}>
-      <div className="flex justify-center items-center gap-3 py-3 my-5 text-xl font-extrabold">
+    <div className="sideNav bg-gray-950 text-white">
+      <div className="flex justify-center items-center gap-3 py-10 text-xl font-extrabold">
         <FaFileMedicalAlt />
         <h3>Data Logger</h3>
       </div>

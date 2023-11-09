@@ -29,7 +29,7 @@ export default function CreateTask() {
 
   return (
     <Page>
-      <h1 className="mb-3">Create Task</h1>
+      <h3 className="text-2xl font-bold mb-5">Create Task</h3>
       <form onSubmit={handleSubmit} className="flex flex-col gap-y-3">
         <div className="flex flex-col items-start w-full mb-3 ">
           <label className="text-lg font-semibold" htmlFor="taskname">

@@ -15,12 +15,12 @@ export default function Layout({ children, links }) {
 
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 500);
+    }, 800);
     return () => clearTimeout(timer);
   }, [location, setIsLoading]);
 
   return (
-    <div className="flex w-screen h-screen bg-gray-900 ">
+    <div className="flex w-screen h-screen overflow-y-hidden dark:bg-gray-900 ">
       <SideNav links={links} />
       <div className="w-full h-full">
         {isLoading && (

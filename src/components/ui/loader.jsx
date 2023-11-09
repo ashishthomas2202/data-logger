@@ -7,7 +7,7 @@ export default function Loader() {
     <motion.span
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
-      transition={{ duration: 0.5, type: "Spring" }}
+      transition={{ duration: 0.8, type: "Spring" }}
       className="loader"
     ></motion.span>
   );

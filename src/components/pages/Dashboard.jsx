@@ -6,7 +6,7 @@ import Page from "../ui/Page";
 export default function Dashboard() {
   return (
     <Page>
-      This is Dashboard page
+      <h3 className="text-2xl font-bold mb-5">Dashboard</h3>
       <Link to="/initialize">Initialize</Link>
       <br />
       <Link to="/tasks/create">Create Task</Link>

@@ -6,8 +6,12 @@ import Layout from "./components/ui/layout";
 import Dashboard from "./components/pages/Dashboard";
 import Settings from "./components/pages/Settings";
 import Initialize from "./components/pages/Initialize";
+import Tasks from "./components/pages/tasks/Tasks";
 import CreateTask from "./components/pages/tasks/Create";
-import {} from "react-icons/fa";
+import ReadTask from "./components/pages/tasks/Read";
+import UpdateTask from "./components/pages/tasks/Update";
+import DeleteTask from "./components/pages/tasks/Delete";
+
 import {
   BsGrid,
   BsListNested,
@@ -46,7 +50,11 @@ function App() {
               <Route exact path="/" Component={Dashboard} />
               <Route path="/settings" Component={Settings} />
               <Route path="/initialize" Component={Initialize} />
-              <Route path="/tasks/create" Component={CreateTask} />
+              <Route exact path="/tasks" Component={Tasks} />
+              <Route exact path="/tasks/create" Component={CreateTask} />
+              <Route exact path="/tasks/read" Component={ReadTask} />
+              <Route exact path="/tasks/update" Component={UpdateTask} />
+              <Route exact path="/tasks/delete" Component={DeleteTask} />
             </Routes>
           </AnimatePresence>
         </Layout>
