@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./layout.css";
 import { useLocation } from "react-router";
-import { LoadingContext } from "../../contexts/loadingContext";
 import Loader from "./loader";
 import SideNav from "./SideNav";
-import Page from "./Page";
 export default function Layout({ children, links }) {
-  // const { isLoading, setIsLoading } = useContext(LoadingContext);
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
 

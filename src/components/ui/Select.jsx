@@ -69,7 +69,9 @@ export default function Select({
             if (!option.hidden)
               return (
                 <div
-                  className="bg-gray-100 hover:bg-gray-50 dark:hover:bg-gray-200 text-center py-2 cursor-pointer transition-all"
+                  className={`${
+                    value == option.value && "bg-gray-200 dark:bg-gray-50"
+                  } bg-gray-100 hover:bg-gray-50 dark:hover:bg-gray-200 text-center py-2 cursor-pointer transition-all`}
                   key={option.value + (props.key ? props.key : i)}
                   onClick={() => {
                     setSelected(i);
