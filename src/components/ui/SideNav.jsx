@@ -15,18 +15,18 @@ export default function SideNav({ links }) {
                 <div
                   className={
                     (location.pathname == link.to
-                      ? `bg-white dark:bg-gray-900 active text-black dark:text-white`
+                      ? `bg-white dark:bg-gray-900 active text-black dark:text-white  before:bg-gray-950 after:bg-gray-950`
                       : "text-white") +
                     " pl-3 py-2 rounded-l-lg flex items-center gap-2"
                   }
                 >
                   {location.pathname == link.to && (
-                    <span className="before"></span>
+                    <span className="before dark:bg-gray-900"></span>
                   )}
                   {link?.icon && link.icon}
                   {link.name}
                   {location.pathname == link.to && (
-                    <span className="after"></span>
+                    <span className="after dark:bg-gray-900"></span>
                   )}
                 </div>
               </Link>

@@ -19,7 +19,7 @@ export default function Field({
         </label>
         <Checkbox
           id={"required" + id}
-          className={"bg-red-500 mt-3"}
+          className={"mt-3"}
           value={field.required}
           onChange={() => {
             handleChange({ ...field, required: !field.required });

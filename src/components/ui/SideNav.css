@@ -43,20 +43,14 @@
 
 .active::before,
 .active::after {
-  background-color: theme(colors.gray.950);
   z-index: 11;
 }
 .before,
 .after {
-  background-color: theme(colors.gray.900);
   z-index: 10;
 }
 
 @media (prefers-color-scheme: light) {
-  /* .active::before,
-  .active::after {
-    background-color: #ffffff;
-  } */
   .before,
   .after {
     background-color: #ffffff;
