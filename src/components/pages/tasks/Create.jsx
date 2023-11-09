@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import _, { set } from "lodash";
+import _ from "lodash";
 import Page from "../../ui/Page";
 import Input from "../../ui/Input";
 import Field from "../../ui/Field";
@@ -36,16 +36,6 @@ export default function CreateTask() {
           <label className="text-lg font-semibold" htmlFor="taskname">
             Task Name:{" "}
           </label>
-          {/* <input
-            className="w-full p-4 rounded"
-            type="text"
-            name="taskname"
-            id="taskname"
-            placeholder="Task Name"
-            value={taskName}
-            onChange={(e) => setTaskName(e.target.value)}
-            required
-          /> */}
           <Input
             className="w-full"
             type="text"

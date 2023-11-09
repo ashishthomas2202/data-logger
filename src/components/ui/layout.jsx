@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import "./layout.css";
 import { useLocation } from "react-router";
+import { AnimatePresence } from "framer-motion";
 import Loader from "./loader";
 import SideNav from "./SideNav";
 export default function Layout({ children, links }) {
@@ -25,17 +25,14 @@ export default function Layout({ children, links }) {
             <Loader />
           </div>
         )}
+
         <div
-          // className={
-          //   (isLoading ? "content-hidden" : "content-visible") +
-          //   " h-full w-full overflow-y-auto flex-auto px-10 py-10"
-          // }
           className={
-            (isLoading ? "invisible opacity-0" : "visible opacity-100") +
-            " h-full w-full overflow-y-auto flex-auto px-10 py-10 transition-all duration-700"
+            (isLoading ? "invisible" : "visible") +
+            " h-full w-full overflow-y-auto flex-auto px-4 md:px-10 py-10"
           }
         >
-          {children}
+          <AnimatePresence mode="wait">{children}</AnimatePresence>
         </div>
       </div>
     </div>

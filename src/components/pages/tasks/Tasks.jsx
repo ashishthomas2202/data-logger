@@ -10,8 +10,12 @@ export default function Tasks() {
     <Page>
       <h3 className="text-2xl font-bold mb-5">Tasks Page</h3>
       {tasks.length == 0 && (
-        <Card className={"h-1/2 flex justify-center items-center"}>
-          <div className="flex flex-col justify-center items-center">
+        <Card
+          className={
+            "h-5/6 min-h-[200px] max-h-96 flex justify-center items-center"
+          }
+        >
+          <div className="flex flex-col p-6 justify-center items-center">
             <BsFileEarmarkText className="text-8xl mb-2" />
             <h3 className="font-bold text-xl">No Task Found</h3>
             <p className="font-light text-xs">

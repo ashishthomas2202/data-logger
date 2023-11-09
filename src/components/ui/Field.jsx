@@ -31,19 +31,6 @@ export default function Field({
         <label htmlFor={"fieldname" + id} className="text-sm">
           Field Name:
         </label>
-        {/* <input
-          className="w-full p-4 rounded"
-          type="text"
-          name={"fieldname" + id}
-          id={"fieldname" + id}
-          placeholder="Field Name"
-          value={field.name}
-          onChange={(e) => {
-            let newData = { ...field, name: e.target.value };
-            handleChange(newData);
-          }}
-          required
-        /> */}
         <Input
           name={"fieldname" + id}
           id={"fieldname" + id}

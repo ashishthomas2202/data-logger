@@ -41,6 +41,12 @@
   background: #ffffff;
 }
 
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -91,11 +97,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* input {
-  background-color: #001523;
-  border-color: #001523;
-  padding: 1rem;
-} */
 select {
   width: 100%;
   background-color: #001523;

@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
 import Layout from "./components/ui/layout";
 import Dashboard from "./components/pages/Dashboard";
 import Settings from "./components/pages/Settings";
@@ -45,18 +44,16 @@ function App() {
     <>
       <Router>
         <Layout links={links}>
-          <AnimatePresence mode="wait">
-            <Routes>
-              <Route exact path="/" Component={Dashboard} />
-              <Route path="/settings" Component={Settings} />
-              <Route path="/initialize" Component={Initialize} />
-              <Route exact path="/tasks" Component={Tasks} />
-              <Route exact path="/tasks/create" Component={CreateTask} />
-              <Route exact path="/tasks/manage" Component={ManageTask} />
-              <Route exact path="/tasks/update" Component={UpdateTask} />
-              <Route exact path="/tasks/delete" Component={DeleteTask} />
-            </Routes>
-          </AnimatePresence>
+          <Routes>
+            <Route exact path="/" Component={Dashboard} />
+            <Route path="/settings" Component={Settings} />
+            <Route path="/initialize" Component={Initialize} />
+            <Route exact path="/tasks" Component={Tasks} />
+            <Route exact path="/tasks/create" Component={CreateTask} />
+            <Route exact path="/tasks/manage" Component={ManageTask} />
+            <Route exact path="/tasks/update" Component={UpdateTask} />
+            <Route exact path="/tasks/delete" Component={DeleteTask} />
+          </Routes>
         </Layout>
       </Router>
     </>
