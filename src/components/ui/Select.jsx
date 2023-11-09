@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import styles from "./Select.module.css";
 import { FaChevronDown } from "react-icons/fa";
 
 export default function Select({
