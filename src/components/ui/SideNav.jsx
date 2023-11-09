@@ -23,7 +23,7 @@ export default function SideNav({ links }) {
                   {location.pathname == link.to && (
                     <span className="before dark:bg-gray-900"></span>
                   )}
-                  {link?.icon && link.icon}
+                  {link?.icon && <span className="text-lg">{link.icon}</span>}
                   {link.name}
                   {location.pathname == link.to && (
                     <span className="after dark:bg-gray-900"></span>

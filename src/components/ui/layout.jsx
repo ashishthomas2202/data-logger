@@ -26,9 +26,13 @@ export default function Layout({ children, links }) {
           </div>
         )}
         <div
+          // className={
+          //   (isLoading ? "content-hidden" : "content-visible") +
+          //   " h-full w-full overflow-y-auto flex-auto px-10 py-10"
+          // }
           className={
-            (isLoading ? "content-hidden" : "content-visible") +
-            " h-full w-full overflow-y-auto flex-auto px-10 py-10"
+            (isLoading ? "invisible opacity-0" : "visible opacity-100") +
+            " h-full w-full overflow-y-auto flex-auto px-10 py-10 transition-all duration-700"
           }
         >
           {children}
