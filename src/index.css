@@ -103,9 +103,9 @@ button:focus-visible {
   padding: 1rem;
   border-radius: 0.25rem;
 } */
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: ;
     background-color: #ffffff;
   }
   a:hover {
@@ -118,4 +118,4 @@ button:focus-visible {
   button:hover {
     background-color: #013d68;
   }
-}
+} */

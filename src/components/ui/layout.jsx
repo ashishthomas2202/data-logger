@@ -21,7 +21,7 @@ export default function Layout({ children, links }) {
   return (
     <div
       // className="flex w-screen h-screen overflow-y-hidden dark:bg-gray-900 "
-      className="flex w-screen h-screen overflow-y-hidden dark:bg-gray-950 "
+      className="flex w-screen h-screen overflow-y-hidden dark:bg-gray-950 text-indigo-950 dark:text-white"
     >
       <SideNav links={links} />
       <div className="w-full h-full overflow-y-auto ">
