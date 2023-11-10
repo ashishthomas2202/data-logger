@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Page from "../../ui/Page";
 import Card from "../../ui/Card";
@@ -6,6 +6,23 @@ import { BsFileEarmarkText } from "react-icons/bs";
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    window.api
+      .send("get-all-tasks")
+      .then((data) => {
+        console.log(data);
+        if (data.status === "success") {
+          setTasks(data.tasks);
+        } else {
+          alert("Error: " + data.message);
+        }
+      })
+      .catch((error) => {
+        alert("Error: " + error.message);
+      });
+  }, []);
+
   return (
     <Page>
       <h3 className="text-2xl font-bold mb-5">Tasks Page</h3>
@@ -24,6 +41,9 @@ export default function Tasks() {
           </div>
         </Card>
       )}
+      {tasks.map((task) => (
+        <Card>{task.name}</Card>
+      ))}
     </Page>
   );
 }

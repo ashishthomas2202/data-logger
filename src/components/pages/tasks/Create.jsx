@@ -11,10 +11,7 @@ export default function CreateTask() {
   let navigate = useNavigate();
 
   const [taskName, setTaskName] = useState("");
-  const [fields, setFields] = useState([
-    { id: "54", name: "Name", type: "text", required: true },
-    { id: "20", name: "Documents", type: "files", required: false },
-  ]);
+  const [fields, setFields] = useState([]);
   const [location, setLocation] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +28,7 @@ export default function CreateTask() {
       setIsLoading(false);
     } else {
       let data = {
-        task: taskName,
+        name: taskName,
         fields: fields,
         location: location,
       };
@@ -144,7 +141,12 @@ export default function CreateTask() {
             onClick={() => {
               setFields((prevFields) => [
                 ...prevFields,
-                { id: _.uniqueId(), name: "", type: "", required: false },
+                {
+                  id: `${new Date().getTime()}`,
+                  name: "",
+                  type: "",
+                  required: false,
+                },
               ]);
             }}
           >
