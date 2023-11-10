@@ -9,25 +9,29 @@ const {
   createFile,
 } = require("../registryUtils");
 
-ipcMain.handle("create-task", async (event, task) => {
+ipcMain.handle("create-task", async (event, taskData) => {
   try {
-    createFolder(task.location, task.name);
-    const folderLocation = path.join(task.location, task.name);
+    createFolder(taskData.location, taskData.name);
+    const folderLocation = path.join(taskData.location, taskData.name);
     createFile(
       folderLocation,
       "data.json",
-      JSON.stringify(task.fields, null, 2)
+      JSON.stringify(taskData.fields, null, 2)
     );
 
-    addTaskToRegistry({
+    const task = {
       id: `${new Date().getTime()}`,
-      name: task.name,
-      location: task.location,
+      name: taskData.name,
+      location: taskData.location,
+      totalRecords: 0,
+      totalFields: taskData.fields.length,
       createdAt: new Date(),
-    });
-    const result = task;
+      updatedAt: new Date(),
+    };
 
-    return { status: "success", data: result };
+    addTaskToRegistry(task);
+
+    return { status: "success", data: task };
   } catch (error) {
     return { status: "error", message: error.message };
   }

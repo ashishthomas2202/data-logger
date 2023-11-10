@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Page from "../../ui/Page";
 import Card from "../../ui/Card";
 import { BsFileEarmarkText } from "react-icons/bs";
+// import { TimeAgo } from "../../../utils/date";
+import TimeAgo from "../../ui/TimeAgo";
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -45,8 +47,24 @@ export default function Tasks() {
       )}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {tasks.map((task) => {
-          console.log(task);
-          return <Card key={task.id}>{task.name}</Card>;
+          const updatedDuration = TimeAgo(task.updatedAt);
+          console.log(updatedDuration);
+          return (
+            <Card key={task.id} className="flex flex-col">
+              <div>
+                <p>{task.name}</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <span className=" text-8xl">{task.totalRecords}</span>
+                <span className="text-sm font-bold">Records</span>
+              </div>
+              <div>
+                <span className="text-sm">
+                  Updated: <TimeAgo timestamp={task.updatedAt} shortHand />{" "}
+                </span>
+              </div>
+            </Card>
+          );
         })}
       </div>
     </Page>
