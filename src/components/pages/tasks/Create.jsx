@@ -93,6 +93,24 @@ export default function CreateTask() {
               required
             />
           </div>
+
+          <div className="px-5 py-3 flex flex-col sm:flex-row justify-between items-center gap-3 outline outline-2 outline-white rounded-lg">
+            <div className="w-full">
+              <p className={location.length == 0 ? "" : "self-start"}>
+                Choose a folder location to save the task data
+              </p>
+              <p className="text-ellipsis overflow-hidden text-xs text-pink-300">
+                {location}
+              </p>
+            </div>
+            <Button
+              className="w-full max-w-[300px] sm:w-1/2"
+              onClick={handleChooseLocation}
+            >
+              Choose
+            </Button>
+          </div>
+
           <div className="flex flex-col items-start w-full ">
             <h2 className="text-lg font-semibold">Fields</h2>
           </div>
@@ -119,18 +137,6 @@ export default function CreateTask() {
               />
             );
           })}
-
-          <div className="px-5 py-3 flex justify-between items-center gap-3 outline outline-2 outline-white rounded-lg">
-            <div>
-              <p className={location.length == 0 ? "" : "self-start"}>
-                Choose a folder to save the task data
-              </p>
-              <span>{location}</span>
-            </div>
-            <Button className="px-2 sm:px-10" onClick={handleChooseLocation}>
-              Choose
-            </Button>
-          </div>
 
           <Button
             className="w-full md:w-1/2 self-center"
