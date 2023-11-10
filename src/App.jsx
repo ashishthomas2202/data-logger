@@ -10,7 +10,7 @@ import CreateTask from "./components/pages/tasks/Create";
 import ManageTask from "./components/pages/tasks/Manage";
 import UpdateTask from "./components/pages/tasks/Update";
 import DeleteTask from "./components/pages/tasks/Delete";
-
+import { TaskContextProvider } from "./context/TaskContext";
 import {
   BsGrid,
   BsListNested,
@@ -43,18 +43,20 @@ function App() {
   return (
     <>
       <Router>
-        <Layout links={links}>
-          <Routes>
-            <Route exact path="/" Component={Dashboard} />
-            <Route path="/settings" Component={Settings} />
-            <Route path="/initialize" Component={Initialize} />
-            <Route exact path="/tasks" Component={Tasks} />
-            <Route exact path="/tasks/create" Component={CreateTask} />
-            <Route exact path="/tasks/manage" Component={ManageTask} />
-            <Route exact path="/tasks/update" Component={UpdateTask} />
-            <Route exact path="/tasks/delete" Component={DeleteTask} />
-          </Routes>
-        </Layout>
+        <TaskContextProvider>
+          <Layout links={links}>
+            <Routes>
+              <Route exact path="/" Component={Dashboard} />
+              <Route path="/settings" Component={Settings} />
+              <Route path="/initialize" Component={Initialize} />
+              <Route exact path="/tasks" Component={Tasks} />
+              <Route exact path="/tasks/create" Component={CreateTask} />
+              <Route exact path="/tasks/manage" Component={ManageTask} />
+              <Route exact path="/tasks/update" Component={UpdateTask} />
+              <Route exact path="/tasks/delete" Component={DeleteTask} />
+            </Routes>
+          </Layout>
+        </TaskContextProvider>
       </Router>
     </>
   );

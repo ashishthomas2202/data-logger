@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import _ from "lodash";
+import React, { useState, useContext } from "react";
+import _, { set } from "lodash";
 import { useNavigate } from "react-router-dom";
+import { TaskContext } from "../../../context/TaskContext";
 import Page from "../../ui/Page";
 import Card from "../../ui/Card";
 import Input from "../../ui/Input";
@@ -9,7 +10,7 @@ import Button from "../../ui/Button";
 
 export default function CreateTask() {
   let navigate = useNavigate();
-
+  const { tasks, setTasks } = useContext(TaskContext);
   const [taskName, setTaskName] = useState("");
   const [fields, setFields] = useState([]);
   const [location, setLocation] = useState("");
@@ -39,6 +40,7 @@ export default function CreateTask() {
           console.log(data);
           if (data.status === "success") {
             alert("Task Created Successfully!");
+            setTasks((prevTasks) => [...prevTasks, data.task]);
             navigate("/tasks");
           } else {
             alert("Error: " + data.message);
