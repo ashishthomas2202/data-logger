@@ -71,6 +71,9 @@ ipcMain.handle("open-directory-dialog", async (event) => {
     return result.filePaths[0]; // The path of the selected directory
   }
 });
+
+module.exports.getMainWindow = () => mainWindow;
+
 // ipcMain.handle("get-tasks", async (event) => {
 //   console.log("handle:get-tasks", config.tasks);
 //   return config.tasks;

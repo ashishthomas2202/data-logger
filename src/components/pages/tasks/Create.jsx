@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import _, { set } from "lodash";
+import _ from "lodash";
+import { useNavigate } from "react-router-dom";
 import Page from "../../ui/Page";
 import Card from "../../ui/Card";
 import Input from "../../ui/Input";
@@ -7,11 +8,14 @@ import Field from "../../ui/Field";
 import Button from "../../ui/Button";
 
 export default function CreateTask() {
+  let navigate = useNavigate();
+
   const [taskName, setTaskName] = useState("");
   const [fields, setFields] = useState([
     { id: "54", name: "Name", type: "text", required: true },
     { id: "20", name: "Documents", type: "files", required: false },
   ]);
+  const [location, setLocation] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,10 +25,15 @@ export default function CreateTask() {
 
     if (fields.length == 0) {
       alert("Please add at least one field");
+      setIsLoading(false);
+    } else if (location.length == 0) {
+      alert("Please choose a location to save the task data");
+      setIsLoading(false);
     } else {
       let data = {
         task: taskName,
         fields: fields,
+        location: location,
       };
 
       window.api
@@ -32,7 +41,8 @@ export default function CreateTask() {
         .then((data) => {
           console.log(data);
           if (data.status === "success") {
-            alert("Task Created");
+            alert("Task Created Successfully!");
+            navigate("/tasks");
           } else {
             alert("Error: " + data.message);
           }
@@ -43,15 +53,24 @@ export default function CreateTask() {
         .finally(() => {
           setIsLoading(false);
         });
-      // const newData = window.api.receive(CREATE_TASK, (data) => {
-      //   console.log(data);
-      //   if (data.status == "success") {
-      //     alert("Task Created");
-      //   } else {
-      //     alert("Error: " + data.message);
-      //   }
-      // });
     }
+  };
+
+  const handleChooseLocation = () => {
+    window.api
+      .send("choose-location")
+      .then((data) => {
+        if (data.status === "success") {
+          setLocation(data.path);
+        } else if (data.status === "canceled") {
+          return;
+        } else {
+          alert("Error: " + data.message);
+        }
+      })
+      .catch((error) => {
+        alert("Error: " + error.message);
+      });
   };
 
   return (
@@ -100,6 +119,18 @@ export default function CreateTask() {
               />
             );
           })}
+
+          <div className="px-5 py-3 flex justify-between items-center gap-3 outline outline-2 outline-white rounded-lg">
+            <div>
+              <p className={location.length == 0 ? "" : "self-start"}>
+                Choose a folder to save the task data
+              </p>
+              <span>{location}</span>
+            </div>
+            <Button className="px-2 sm:px-10" onClick={handleChooseLocation}>
+              Choose
+            </Button>
+          </div>
 
           <Button
             className="w-full md:w-1/2 self-center"
