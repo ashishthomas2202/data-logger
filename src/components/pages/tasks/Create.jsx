@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import _ from "lodash";
+import _, { set } from "lodash";
 import Page from "../../ui/Page";
 import Card from "../../ui/Card";
 import Input from "../../ui/Input";
 import Field from "../../ui/Field";
 import Button from "../../ui/Button";
+
 export default function CreateTask() {
   const [taskName, setTaskName] = useState("");
   const [fields, setFields] = useState([
@@ -12,12 +13,12 @@ export default function CreateTask() {
     { id: "20", name: "Documents", type: "files", required: false },
   ]);
 
-  useEffect(() => {
-    console.log(fields);
-  }, [fields]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
     if (fields.length == 0) {
       alert("Please add at least one field");
     } else {
@@ -25,7 +26,31 @@ export default function CreateTask() {
         task: taskName,
         fields: fields,
       };
-      console.log(data);
+
+      window.api
+        .send("create-task", data)
+        .then((data) => {
+          console.log(data);
+          if (data.status === "success") {
+            alert("Task Created");
+          } else {
+            alert("Error: " + data.message);
+          }
+        })
+        .catch((error) => {
+          alert("Error: " + error.message);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+      // const newData = window.api.receive(CREATE_TASK, (data) => {
+      //   console.log(data);
+      //   if (data.status == "success") {
+      //     alert("Task Created");
+      //   } else {
+      //     alert("Error: " + data.message);
+      //   }
+      // });
     }
   };
 
@@ -88,7 +113,11 @@ export default function CreateTask() {
           >
             Add Fields
           </Button>
-          <Button className="w-full md:w-1/2 self-center" type="submit">
+          <Button
+            className="w-full md:w-1/2 self-center"
+            type="submit"
+            loading={isLoading}
+          >
             Create Task
           </Button>
         </form>

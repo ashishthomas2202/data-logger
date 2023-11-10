@@ -24,18 +24,12 @@ export default function Layout({ children, links }) {
       <div className="w-full h-full overflow-y-auto ">
         {isLoading && (
           <div className="h-full flex justify-center items-center">
-            <Loader />
+            <Loader animate />
           </div>
         )}
 
         {!isLoading && (
-          <div
-            className={
-              "w-full flex-auto px-4 md:px-10 py-10"
-
-              // " h-full w-full overflow-y-auto flex-auto px-4 md:px-10 py-10"
-            }
-          >
+          <div className={"w-full flex-auto px-4 md:px-10 py-10"}>
             <AnimatePresence mode="wait">{children}</AnimatePresence>
           </div>
         )}

@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
-
-const server = require("./server");
+require("../ipc/ipcHandlers/taskHandler");
+// const server = require("../server");
 const path = require("path");
 const isDev = require("electron-is-dev");
 let mainWindow;
@@ -40,7 +40,7 @@ function createWindow() {
   });
 
   // open dev tools
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 }
 
 // create the window on electron initialization

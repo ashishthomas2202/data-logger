@@ -23,7 +23,6 @@ export default function Select({
     if (valueIndex == -1) {
       valueIndex = 0;
     }
-    console.log(value, valueIndex);
     setSelected(valueIndex);
   }, []);
 

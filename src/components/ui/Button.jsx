@@ -1,10 +1,12 @@
 import React from "react";
+import Loader from "./loader";
 
 export default function Button({
   children,
   onClick,
   className = "",
   variant = "primary",
+  loading = false,
   ...props
 }) {
   const variants = {
@@ -21,7 +23,7 @@ export default function Button({
       onClick={onClick}
       {...props}
     >
-      {children}
+      {loading ? <Loader /> : children}
     </button>
   );
 }
