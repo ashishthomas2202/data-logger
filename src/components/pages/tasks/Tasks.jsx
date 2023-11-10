@@ -8,10 +8,13 @@ export default function Tasks() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
+    getTasks();
+  }, []);
+
+  function getTasks() {
     window.api
       .send("get-all-tasks")
       .then((data) => {
-        console.log(data);
         if (data.status === "success") {
           setTasks(data.tasks);
         } else {
@@ -21,8 +24,7 @@ export default function Tasks() {
       .catch((error) => {
         alert("Error: " + error.message);
       });
-  }, []);
-
+  }
   return (
     <Page>
       <h3 className="text-2xl font-bold mb-5">Tasks Page</h3>
@@ -41,9 +43,12 @@ export default function Tasks() {
           </div>
         </Card>
       )}
-      {tasks.map((task) => (
-        <Card>{task.name}</Card>
-      ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {tasks.map((task) => {
+          console.log(task);
+          return <Card key={task.id}>{task.name}</Card>;
+        })}
+      </div>
     </Page>
   );
 }
