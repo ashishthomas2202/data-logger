@@ -34,6 +34,17 @@ function addTaskToRegistry(taskData) {
   );
 }
 
+function resetApp() {
+  const registry = {
+    tasks: [],
+  };
+  fs.writeFileSync(
+    appRegistryFilePath,
+    JSON.stringify(registry, null, 2),
+    "utf8"
+  );
+}
+
 ipcMain.handle("create-task", async (event, task) => {
   try {
     // const result = await createTask(taskDetails); // This should be an async function
@@ -88,6 +99,15 @@ ipcMain.handle("get-all-tasks", async (event) => {
     const registry = getAppRegistry();
 
     return { status: "success", tasks: registry.tasks };
+  } catch (error) {
+    return { status: "error", message: error.message };
+  }
+});
+
+ipcMain.handle("reset", async (event) => {
+  try {
+    resetApp();
+    return { status: "success" };
   } catch (error) {
     return { status: "error", message: error.message };
   }
