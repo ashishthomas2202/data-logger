@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { TaskContext } from "../../../context/TaskContext";
 import Page from "../../ui/Page";
 import Card from "../../ui/Card";
 import { BsFileEarmarkText } from "react-icons/bs";
@@ -7,26 +8,27 @@ import { BsFileEarmarkText } from "react-icons/bs";
 import TimeAgo from "../../ui/TimeAgo";
 
 export default function Tasks() {
-  const [tasks, setTasks] = useState([]);
+  const { tasks, setTasks } = useContext(TaskContext);
+  // const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    getTasks();
-  }, []);
+  // useEffect(() => {
+  //   getTasks();
+  // }, []);
 
-  function getTasks() {
-    window.api
-      .send("get-all-tasks")
-      .then((data) => {
-        if (data.status === "success") {
-          setTasks(data.tasks);
-        } else {
-          alert("Error: " + data.message);
-        }
-      })
-      .catch((error) => {
-        alert("Error: " + error.message);
-      });
-  }
+  // function getTasks() {
+  //   window.api
+  //     .send("get-all-tasks")
+  //     .then((data) => {
+  //       if (data.status === "success") {
+  //         setTasks(data.tasks);
+  //       } else {
+  //         alert("Error: " + data.message);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       alert("Error: " + error.message);
+  //     });
+  // }
   return (
     <Page>
       <h3 className="text-2xl font-bold mb-5">Tasks Page</h3>
@@ -50,18 +52,22 @@ export default function Tasks() {
           const updatedDuration = TimeAgo(task.updatedAt);
           console.log(updatedDuration);
           return (
-            <Card key={task.id} className="flex flex-col">
+            <Card key={task.id} className="flex flex-col gap-3">
               <div>
-                <p>{task.name}</p>
+                <p className="text-lg font-bold">{task.name}</p>
               </div>
               <div className="flex flex-col items-center">
                 <span className=" text-8xl">{task.totalRecords}</span>
                 <span className="text-sm font-bold">Records</span>
               </div>
               <div>
-                <span className="text-sm">
+                <p className="text-sm">Total Fields: {task.totalFields}</p>
+                <p className="text-sm">
                   Updated: <TimeAgo timestamp={task.updatedAt} shortHand />{" "}
-                </span>
+                </p>
+                <p className="text-sm">
+                  Created: <TimeAgo timestamp={task.createdAt} shortHand />{" "}
+                </p>
               </div>
             </Card>
           );
