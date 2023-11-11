@@ -7,11 +7,13 @@ import { BsFileEarmarkText } from "react-icons/bs";
 import TimeAgo from "../../ui/TimeAgo";
 import Button from "../../ui/Button";
 import { BsPencil, BsTrash, BsFolder } from "react-icons/bs";
+import Input from "../../ui/Input";
 import Dialog from "../../ui/Dialog";
 
 export default function Tasks() {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const dialogInputRef = useRef(null);
+  const [dialogTask, setDialogTask] = useState({});
+  const [dialogInput, setDialogInput] = useState("");
   const { tasks } = useContext(TaskContext);
   // const [tasks, setTasks] = useState([]);
 
@@ -36,15 +38,17 @@ export default function Tasks() {
 
   const handleEdit = (id) => {};
   const handleDelete = (task) => {
+    setDialogTask(task);
     setDialogOpen(true);
-    // window.api.send("delete-task", id).then((data) => {
-    //   if (data.status === "success") {
-    //     alert("Task Deleted Successfully!");
-    //   } else {
-    //     alert("Error: " + data.message);
-    //   }
-    // });
+    window.api.send("delete-task", id).then((data) => {
+      if (data.status === "success") {
+        alert("Task Deleted Successfully!");
+      } else {
+        alert("Error: " + data.message);
+      }
+    });
   };
+
   const handleOpenFolder = (location) => {
     window.api.send("open-folder", location);
   };
@@ -74,7 +78,20 @@ export default function Tasks() {
           size="md"
           onClose={() => setDialogOpen(false)}
         >
-          <input type="text" ref={dialogInputRef} />
+          <form className="flex flex-col items-center gap-3">
+            <p className="self-start">
+              To confirm, type "{dialogTask.name}" in the box below?
+            </p>
+
+            <Input
+              type="text"
+              value={dialogInput}
+              onChange={(e) => setDialogInput(e.target.value)}
+            />
+            <Button variant="danger" type="submit" className=" w-fit">
+              Delete the task
+            </Button>
+          </form>
         </Dialog>
 
         {tasks &&
@@ -82,7 +99,7 @@ export default function Tasks() {
             // console.log(task);
             return (
               <Card key={task.id} className="flex flex-col gap-3">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center gap-2">
                   <p className="text-lg font-bold ">{task.name}</p>
                   <div className="flex gap-1">
                     <Button
