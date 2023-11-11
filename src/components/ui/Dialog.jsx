@@ -48,3 +48,7 @@ export default function Dialog({
     </motion.div>
   );
 }
+
+export function DialogBody({ children, className = "" }) {
+  return <div className={`flex flex-col gap-3 ${className}`}>{children}</div>;
+}

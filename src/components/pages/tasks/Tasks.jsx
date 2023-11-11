@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { TaskContext } from "../../../context/TaskContext";
 import Page from "../../ui/Page";
@@ -11,6 +11,7 @@ import Dialog from "../../ui/Dialog";
 
 export default function Tasks() {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const dialogInputRef = useRef(null);
   const { tasks } = useContext(TaskContext);
   // const [tasks, setTasks] = useState([]);
 
@@ -49,15 +50,6 @@ export default function Tasks() {
 
   return (
     <Page isLoading={tasks === undefined}>
-      <Dialog
-        isOpen={dialogOpen}
-        title="Delete Task"
-        size="md"
-        onClose={() => setDialogOpen(false)}
-      >
-        Delete
-      </Dialog>
-
       <h3 className="text-2xl font-bold mb-5">Tasks Page</h3>
       {tasks && tasks.length == 0 && (
         <Card
@@ -75,6 +67,15 @@ export default function Tasks() {
         </Card>
       )}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <Dialog
+          isOpen={dialogOpen}
+          title="Delete Task"
+          size="md"
+          onClose={() => setDialogOpen(false)}
+        >
+          <input type="text" ref={dialogInputRef} />
+        </Dialog>
+
         {tasks &&
           tasks.map((task) => {
             // console.log(task);
@@ -92,7 +93,7 @@ export default function Tasks() {
                     <Button
                       variant="danger"
                       className="px-2 h-2"
-                      onClick={() => setDialogOpen(true)}
+                      onClick={handleDelete(task)}
                     >
                       <BsTrash />
                     </Button>
