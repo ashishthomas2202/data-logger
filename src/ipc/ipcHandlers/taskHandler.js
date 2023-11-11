@@ -15,6 +15,7 @@ ipcMain.handle("create-task", async (event, taskData) => {
       ...taskData,
       id: `${new Date().getTime()}`,
       totalRecords: 0,
+      totalFields: taskData.fields.length,
       createdAt: new Date(),
       updatedAt: new Date(),
     };

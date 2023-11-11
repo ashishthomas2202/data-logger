@@ -6,7 +6,7 @@ import Card from "../../ui/Card";
 import { BsFileEarmarkText } from "react-icons/bs";
 import TimeAgo from "../../ui/TimeAgo";
 import Button from "../../ui/Button";
-import { BsFolder } from "react-icons/bs";
+import { BsPencil, BsTrash, BsFolder } from "react-icons/bs";
 
 export default function Tasks() {
   const { tasks } = useContext(TaskContext);
@@ -63,8 +63,16 @@ export default function Tasks() {
             // console.log(task);
             return (
               <Card key={task.id} className="flex flex-col gap-3">
-                <div>
-                  <p className="text-lg font-bold">{task.name}</p>
+                <div className="flex justify-between items-center">
+                  <p className="text-lg font-bold ">{task.name}</p>
+                  <div className="flex gap-1">
+                    <Button className="px-2 h-2">
+                      <BsPencil />
+                    </Button>
+                    <Button variant="danger" className="px-2 h-2">
+                      <BsTrash />
+                    </Button>
+                  </div>
                 </div>
                 <div className="flex flex-col items-center">
                   <span className=" text-8xl">{task.totalRecords}</span>
