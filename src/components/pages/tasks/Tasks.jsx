@@ -35,14 +35,15 @@ export default function Tasks() {
   // }, [tasks]);
 
   const handleEdit = (id) => {};
-  const handDelete = (id) => {
-    window.api.send("delete-task", id).then((data) => {
-      if (data.status === "success") {
-        alert("Task Deleted Successfully!");
-      } else {
-        alert("Error: " + data.message);
-      }
-    });
+  const handleDelete = (task) => {
+    setDialogOpen(true);
+    // window.api.send("delete-task", id).then((data) => {
+    //   if (data.status === "success") {
+    //     alert("Task Deleted Successfully!");
+    //   } else {
+    //     alert("Error: " + data.message);
+    //   }
+    // });
   };
   const handleOpenFolder = (location) => {
     window.api.send("open-folder", location);
@@ -93,7 +94,7 @@ export default function Tasks() {
                     <Button
                       variant="danger"
                       className="px-2 h-2"
-                      onClick={handleDelete(task)}
+                      onClick={() => handleDelete(task)}
                     >
                       <BsTrash />
                     </Button>

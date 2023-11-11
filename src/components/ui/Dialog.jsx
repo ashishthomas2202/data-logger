@@ -32,6 +32,9 @@ export default function Dialog({
     >
       <div
         className={` ${sizes[size]} min-w-[300px] max-w-[1000px] bg-gray-950 px-5 py-2 rounded-lg ${className}`}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
       >
         <header className="flex justify-between items-center pb-2  border-slate-300 dark border-gray-900 border-b-2">
           <h3 className="font-bold">{title}</h3>
@@ -47,8 +50,4 @@ export default function Dialog({
       </div>
     </motion.div>
   );
-}
-
-export function DialogBody({ children, className = "" }) {
-  return <div className={`flex flex-col gap-3 ${className}`}>{children}</div>;
 }
