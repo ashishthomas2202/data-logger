@@ -23,7 +23,12 @@ ipcMain.handle("create-task", async (event, taskData) => {
 
     const folderLocation = path.join(task.location, task.name);
 
-    createFile(folderLocation, "data.json", JSON.stringify({ task }, null, 2));
+    const { location, ...taskWithoutLocation } = task;
+    createFile(
+      folderLocation,
+      "data.json",
+      JSON.stringify(taskWithoutLocation, null, 2)
+    );
 
     addTaskToRegistry(task);
 

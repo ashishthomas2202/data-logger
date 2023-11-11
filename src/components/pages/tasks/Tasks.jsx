@@ -5,6 +5,8 @@ import Page from "../../ui/Page";
 import Card from "../../ui/Card";
 import { BsFileEarmarkText } from "react-icons/bs";
 import TimeAgo from "../../ui/TimeAgo";
+import Button from "../../ui/Button";
+import { BsFolder } from "react-icons/bs";
 
 export default function Tasks() {
   const { tasks } = useContext(TaskContext);
@@ -32,6 +34,8 @@ export default function Tasks() {
   // useEffect(() => {
   //   console.log(tasks);
   // }, [tasks]);
+
+  const handleOpenFolder = () => {};
 
   return (
     <Page isLoading={tasks === undefined}>
@@ -64,14 +68,19 @@ export default function Tasks() {
                   <span className=" text-8xl">{task.totalRecords}</span>
                   <span className="text-sm font-bold">Records</span>
                 </div>
-                <div>
-                  <p className="text-sm">Total Fields: {task.totalFields}</p>
-                  <p className="text-sm">
-                    Updated: <TimeAgo timestamp={task.updatedAt} shortHand />{" "}
-                  </p>
-                  <p className="text-sm">
-                    Created: <TimeAgo timestamp={task.createdAt} shortHand />{" "}
-                  </p>
+                <div className="flex justify-between">
+                  <div>
+                    <p className="text-sm">Total Fields: {task.totalFields}</p>
+                    <p className="text-sm">
+                      Updated: <TimeAgo timestamp={task.updatedAt} shortHand />{" "}
+                    </p>
+                    <p className="text-sm">
+                      Created: <TimeAgo timestamp={task.createdAt} shortHand />{" "}
+                    </p>
+                  </div>
+                  <Button className="px-5 py-5" onClick={handleOpenFolder}>
+                    <BsFolder className="text-lg" />
+                  </Button>
                 </div>
               </Card>
             );
