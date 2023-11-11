@@ -7,14 +7,12 @@ import { BsFileEarmarkText } from "react-icons/bs";
 import TimeAgo from "../../ui/TimeAgo";
 import Button from "../../ui/Button";
 import { BsPencil, BsTrash, BsFolder } from "react-icons/bs";
+import Dialog from "../../ui/Dialog";
 
 export default function Tasks() {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const { tasks } = useContext(TaskContext);
   // const [tasks, setTasks] = useState([]);
-
-  // useEffect(() => {
-  //   getTasks();
-  // }, []);
 
   // function getTasks() {
   //   window.api
@@ -35,12 +33,31 @@ export default function Tasks() {
   //   console.log(tasks);
   // }, [tasks]);
 
+  const handleEdit = (id) => {};
+  const handDelete = (id) => {
+    window.api.send("delete-task", id).then((data) => {
+      if (data.status === "success") {
+        alert("Task Deleted Successfully!");
+      } else {
+        alert("Error: " + data.message);
+      }
+    });
+  };
   const handleOpenFolder = (location) => {
     window.api.send("open-folder", location);
   };
 
   return (
     <Page isLoading={tasks === undefined}>
+      <Dialog
+        isOpen={dialogOpen}
+        title="Delete Task"
+        size="md"
+        onClose={() => setDialogOpen(false)}
+      >
+        Delete
+      </Dialog>
+
       <h3 className="text-2xl font-bold mb-5">Tasks Page</h3>
       {tasks && tasks.length == 0 && (
         <Card
@@ -66,10 +83,17 @@ export default function Tasks() {
                 <div className="flex justify-between items-center">
                   <p className="text-lg font-bold ">{task.name}</p>
                   <div className="flex gap-1">
-                    <Button className="px-2 h-2">
+                    <Button
+                      className="px-2 h-2"
+                      onClick={() => handleEdit(task.id)}
+                    >
                       <BsPencil />
                     </Button>
-                    <Button variant="danger" className="px-2 h-2">
+                    <Button
+                      variant="danger"
+                      className="px-2 h-2"
+                      onClick={() => setDialogOpen(true)}
+                    >
                       <BsTrash />
                     </Button>
                   </div>

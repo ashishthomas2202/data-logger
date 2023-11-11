@@ -39,6 +39,14 @@ ipcMain.handle("create-task", async (event, taskData) => {
   }
 });
 
+ipcMain.handle("delete-task", async (event, id) => {
+  try {
+    return { status: "success" };
+  } catch (error) {
+    return { status: "error", message: error.message };
+  }
+});
+
 ipcMain.handle("choose-location", async (event) => {
   try {
     const location = await dialog.showOpenDialog(mainWindow, {
