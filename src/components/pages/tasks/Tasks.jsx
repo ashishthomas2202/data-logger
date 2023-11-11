@@ -8,27 +8,27 @@ import { BsFileEarmarkText } from "react-icons/bs";
 import TimeAgo from "../../ui/TimeAgo";
 
 export default function Tasks() {
-  const { tasks, setTasks } = useContext(TaskContext);
-  // const [tasks, setTasks] = useState([]);
+  // const { tasks, setTasks } = useContext(TaskContext);
+  const [tasks, setTasks] = useState([]);
 
-  // useEffect(() => {
-  //   getTasks();
-  // }, []);
+  useEffect(() => {
+    getTasks();
+  }, []);
 
-  // function getTasks() {
-  //   window.api
-  //     .send("get-all-tasks")
-  //     .then((data) => {
-  //       if (data.status === "success") {
-  //         setTasks(data.tasks);
-  //       } else {
-  //         alert("Error: " + data.message);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       alert("Error: " + error.message);
-  //     });
-  // }
+  function getTasks() {
+    window.api
+      .send("get-all-tasks")
+      .then((data) => {
+        if (data.status === "success") {
+          setTasks(data.tasks);
+        } else {
+          alert("Error: " + data.message);
+        }
+      })
+      .catch((error) => {
+        alert("Error: " + error.message);
+      });
+  }
 
   useEffect(() => {
     console.log(tasks);
