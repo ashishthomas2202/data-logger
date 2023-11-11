@@ -29,10 +29,15 @@ export default function Tasks() {
   //       alert("Error: " + error.message);
   //     });
   // }
+
+  useEffect(() => {
+    console.log(tasks);
+  }, [tasks]);
+
   return (
-    <Page>
+    <Page isLoading={tasks === undefined}>
       <h3 className="text-2xl font-bold mb-5">Tasks Page</h3>
-      {tasks.length == 0 && (
+      {tasks && tasks.length == 0 && (
         <Card
           className={
             "h-5/6 min-h-[200px] max-h-96 flex justify-center items-center"
@@ -48,30 +53,30 @@ export default function Tasks() {
         </Card>
       )}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {tasks.map((task) => {
-          const updatedDuration = TimeAgo(task.updatedAt);
-          console.log(updatedDuration);
-          return (
-            <Card key={task.id} className="flex flex-col gap-3">
-              <div>
-                <p className="text-lg font-bold">{task.name}</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <span className=" text-8xl">{task.totalRecords}</span>
-                <span className="text-sm font-bold">Records</span>
-              </div>
-              <div>
-                <p className="text-sm">Total Fields: {task.totalFields}</p>
-                <p className="text-sm">
-                  Updated: <TimeAgo timestamp={task.updatedAt} shortHand />{" "}
-                </p>
-                <p className="text-sm">
-                  Created: <TimeAgo timestamp={task.createdAt} shortHand />{" "}
-                </p>
-              </div>
-            </Card>
-          );
-        })}
+        {tasks &&
+          tasks.map((task) => {
+            console.log(task);
+            return (
+              <Card key={task.id} className="flex flex-col gap-3">
+                <div>
+                  <p className="text-lg font-bold">{task.name}</p>
+                </div>
+                <div className="flex flex-col items-center">
+                  <span className=" text-8xl">{task.totalRecords}</span>
+                  <span className="text-sm font-bold">Records</span>
+                </div>
+                <div>
+                  <p className="text-sm">Total Fields: {task.totalFields}</p>
+                  <p className="text-sm">
+                    Updated: <TimeAgo timestamp={task.updatedAt} shortHand />{" "}
+                  </p>
+                  <p className="text-sm">
+                    Created: <TimeAgo timestamp={task.createdAt} shortHand />{" "}
+                  </p>
+                </div>
+              </Card>
+            );
+          })}
       </div>
     </Page>
   );

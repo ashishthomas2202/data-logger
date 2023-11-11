@@ -46,14 +46,14 @@ function App() {
         <TaskContextProvider>
           <Layout links={links}>
             <Routes>
-              <Route exact path="/" Component={Dashboard} />
-              <Route path="/settings" Component={Settings} />
-              <Route path="/initialize" Component={Initialize} />
-              <Route exact path="/tasks" Component={Tasks} />
-              <Route exact path="/tasks/create" Component={CreateTask} />
-              <Route exact path="/tasks/manage" Component={ManageTask} />
-              <Route exact path="/tasks/update" Component={UpdateTask} />
-              <Route exact path="/tasks/delete" Component={DeleteTask} />
+              <Route exact path="/" element={<Dashboard />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/initialize" element={<Initialize />} />
+              <Route exact path="/tasks" element={<Tasks />} />
+              <Route exact path="/tasks/create" element={<CreateTask />} />
+              <Route exact path="/tasks/manage" element={<ManageTask />} />
+              <Route exact path="/tasks/update" element={<UpdateTask />} />
+              <Route exact path="/tasks/delete" element={<DeleteTask />} />
             </Routes>
           </Layout>
         </TaskContextProvider>

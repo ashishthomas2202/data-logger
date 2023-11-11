@@ -17,6 +17,26 @@ export default function CreateTask() {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const createTask = (task) => {
+    window.api
+      .send("create-task", task)
+      .then((data) => {
+        console.log(data);
+        if (data.status === "success") {
+          setTasks((prevTasks) => [...prevTasks, data.task]);
+          navigate("/tasks");
+          alert("Task Created Successfully!");
+        } else {
+          alert("Error: " + data.message);
+        }
+      })
+      .catch((error) => {
+        alert("Error: " + error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -34,24 +54,7 @@ export default function CreateTask() {
         location: location,
       };
 
-      window.api
-        .send("create-task", data)
-        .then((data) => {
-          console.log(data);
-          if (data.status === "success") {
-            alert("Task Created Successfully!");
-            setTasks((prevTasks) => [...prevTasks, data.task]);
-            navigate("/tasks");
-          } else {
-            alert("Error: " + data.message);
-          }
-        })
-        .catch((error) => {
-          alert("Error: " + error.message);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+      createTask(data);
     }
   };
 

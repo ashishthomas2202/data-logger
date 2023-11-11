@@ -1,9 +1,17 @@
 import React, { useState, useEffect, createContext } from "react";
 
-export const TaskContext = createContext();
+export const TaskContext = createContext({
+  tasks: [],
+  setTasks: () => {},
+});
 
 export const TaskContextProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
+
+  const contextValue = {
+    tasks,
+    setTasks,
+  };
 
   function getTasks() {
     window.api
@@ -25,8 +33,6 @@ export const TaskContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <TaskContext.Provider value={{ tasks, setTasks }}>
-      {children}
-    </TaskContext.Provider>
+    <TaskContext.Provider value={contextValue}>{children}</TaskContext.Provider>
   );
 };
