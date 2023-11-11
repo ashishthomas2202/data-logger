@@ -10,13 +10,15 @@ import Button from "../../ui/Button";
 import { BsPencil, BsTrash, BsFolder } from "react-icons/bs";
 import Input from "../../ui/Input";
 import Dialog from "../../ui/Dialog";
+import Checkbox from "../../ui/Checkbox";
 
 export default function Tasks() {
   const [dialogState, setDialogState] = useState({
     task: {},
     open: false,
     input: "",
-    disabled: true,
+    deleteFolder: false,
+    disabledButton: true,
   });
   const { tasks } = useContext(TaskContext);
   // const [tasks, setTasks] = useState([]);
@@ -42,9 +44,9 @@ export default function Tasks() {
 
   useEffect(() => {
     if (_.lowerCase(dialogState.input) == _.lowerCase(dialogState.task.name)) {
-      setDialogState((prevState) => ({ ...prevState, disabled: false }));
+      setDialogState((prevState) => ({ ...prevState, disabledButton: false }));
     } else {
-      setDialogState((prevState) => ({ ...prevState, disabled: true }));
+      setDialogState((prevState) => ({ ...prevState, disabledButton: true }));
     }
   }, [dialogState.input, dialogState.task.name]);
 
@@ -93,17 +95,17 @@ export default function Tasks() {
               ...prevState,
               task: {},
               input: "",
-              disabled: true,
+              disabledButton: true,
               open: false,
             }))
           }
         >
           <form className="flex flex-col items-center gap-3 ">
-            <p className="self-start text-white">
+            <label className="self-start text-white">
               {/* To confirm, type "{dialogTask.name}" in the box below? */}
               To confirm, type "{_.trim(dialogState.task.name)}" in the box
               below?
-            </p>
+            </label>
 
             <Input
               type="text"
@@ -117,11 +119,25 @@ export default function Tasks() {
                 }))
               }
             />
+
+            <div className="flex self-start">
+              <Checkbox
+                value={dialogState.deleteFolder}
+                onChange={(e) => {
+                  setDialogState((prevState) => ({
+                    ...prevState,
+                    deleteFolder: !prevState.deleteFolder,
+                  }));
+                }}
+              />
+              <label className="pl-3">Delete Task Folder? (Permanent)</label>
+            </div>
+
             <Button
               variant="danger"
               type="submit"
               className=" w-fit"
-              disabled={dialogState.disabled}
+              disabled={dialogState.disabledButton}
             >
               Delete the task
             </Button>

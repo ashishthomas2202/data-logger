@@ -5,7 +5,7 @@ export default function Checkbox({
   id,
   className = "",
   value = false,
-  onChange,
+  onChange = () => {},
 }) {
   return (
     <div
