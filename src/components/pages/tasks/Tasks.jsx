@@ -35,7 +35,9 @@ export default function Tasks() {
   //   console.log(tasks);
   // }, [tasks]);
 
-  const handleOpenFolder = () => {};
+  const handleOpenFolder = (location) => {
+    window.api.send("open-folder", location);
+  };
 
   return (
     <Page isLoading={tasks === undefined}>
@@ -78,7 +80,10 @@ export default function Tasks() {
                       Created: <TimeAgo timestamp={task.createdAt} shortHand />{" "}
                     </p>
                   </div>
-                  <Button className="px-5 py-5" onClick={handleOpenFolder}>
+                  <Button
+                    className="px-5 py-5"
+                    onClick={() => handleOpenFolder(task.location)}
+                  >
                     <BsFolder className="text-lg" />
                   </Button>
                 </div>

@@ -1,4 +1,4 @@
-const { ipcMain, dialog } = require("electron");
+const { ipcMain, dialog, shell } = require("electron");
 const path = require("path");
 const { mainWindow } = require("../../electron/main");
 const {
@@ -30,7 +30,7 @@ ipcMain.handle("create-task", async (event, taskData) => {
       JSON.stringify(taskWithoutLocation, null, 2)
     );
 
-    addTaskToRegistry(task);
+    addTaskToRegistry({ ...task, location: folderLocation });
 
     return { status: "success", data: task };
   } catch (error) {
@@ -61,6 +61,15 @@ ipcMain.handle("get-all-tasks", async (event) => {
   try {
     const registry = getAppRegistry();
     return { status: "success", tasks: registry.tasks };
+  } catch (error) {
+    return { status: "error", message: error.message };
+  }
+});
+
+ipcMain.handle("open-folder", async (event, location) => {
+  try {
+    await shell.openPath(location);
+    return { status: "success" };
   } catch (error) {
     return { status: "error", message: error.message };
   }
