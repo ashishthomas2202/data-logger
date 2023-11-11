@@ -10,7 +10,7 @@ import Button from "../../ui/Button";
 
 export default function CreateTask() {
   let navigate = useNavigate();
-  const { tasks, setTasks } = useContext(TaskContext);
+  const { tasks, updateTasks } = useContext(TaskContext);
   const [taskName, setTaskName] = useState("");
   const [fields, setFields] = useState([]);
   const [location, setLocation] = useState("");
@@ -23,7 +23,8 @@ export default function CreateTask() {
       .then((data) => {
         console.log(data);
         if (data.status === "success") {
-          setTasks((prevTasks) => [...prevTasks, data.task]);
+          // setTasks((prevTasks) => [...prevTasks, data.task]);
+          updateTasks();
           navigate("/tasks");
           alert("Task Created Successfully!");
         } else {

@@ -4,35 +4,34 @@ import { TaskContext } from "../../../context/TaskContext";
 import Page from "../../ui/Page";
 import Card from "../../ui/Card";
 import { BsFileEarmarkText } from "react-icons/bs";
-// import { TimeAgo } from "../../../utils/date";
 import TimeAgo from "../../ui/TimeAgo";
 
 export default function Tasks() {
-  // const { tasks, setTasks } = useContext(TaskContext);
-  const [tasks, setTasks] = useState([]);
+  const { tasks } = useContext(TaskContext);
+  // const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    getTasks();
-  }, []);
+  // useEffect(() => {
+  //   getTasks();
+  // }, []);
 
-  function getTasks() {
-    window.api
-      .send("get-all-tasks")
-      .then((data) => {
-        if (data.status === "success") {
-          setTasks(data.tasks);
-        } else {
-          alert("Error: " + data.message);
-        }
-      })
-      .catch((error) => {
-        alert("Error: " + error.message);
-      });
-  }
+  // function getTasks() {
+  //   window.api
+  //     .send("get-all-tasks")
+  //     .then((data) => {
+  //       if (data.status === "success") {
+  //         setTasks(data.tasks);
+  //       } else {
+  //         alert("Error: " + data.message);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       alert("Error: " + error.message);
+  //     });
+  // }
 
-  useEffect(() => {
-    console.log(tasks);
-  }, [tasks]);
+  // useEffect(() => {
+  //   console.log(tasks);
+  // }, [tasks]);
 
   return (
     <Page isLoading={tasks === undefined}>
@@ -55,7 +54,7 @@ export default function Tasks() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {tasks &&
           tasks.map((task) => {
-            console.log(task);
+            // console.log(task);
             return (
               <Card key={task.id} className="flex flex-col gap-3">
                 <div>

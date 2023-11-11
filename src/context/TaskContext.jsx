@@ -11,6 +11,7 @@ export const TaskContextProvider = ({ children }) => {
   const contextValue = {
     tasks,
     setTasks,
+    updateTasks: getTasks,
   };
 
   function getTasks() {
