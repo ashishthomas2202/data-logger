@@ -37,7 +37,7 @@ export default function Dialog({
         }}
       >
         <header className="flex justify-between items-center pb-2  border-slate-300 dark border-gray-900 border-b-2">
-          <h3 className="font-bold">{title}</h3>
+          <h3 className="font-bold text-white">{title}</h3>
           <Button
             variant="clear"
             onClick={onClose}

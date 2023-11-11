@@ -1,4 +1,5 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
+import _ from "lodash";
 import { Link } from "react-router-dom";
 import { TaskContext } from "../../../context/TaskContext";
 import Page from "../../ui/Page";
@@ -11,9 +12,12 @@ import Input from "../../ui/Input";
 import Dialog from "../../ui/Dialog";
 
 export default function Tasks() {
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogTask, setDialogTask] = useState({});
-  const [dialogInput, setDialogInput] = useState("");
+  const [dialogState, setDialogState] = useState({
+    task: {},
+    open: false,
+    input: "",
+    disabled: true,
+  });
   const { tasks } = useContext(TaskContext);
   // const [tasks, setTasks] = useState([]);
 
@@ -36,17 +40,24 @@ export default function Tasks() {
   //   console.log(tasks);
   // }, [tasks]);
 
+  useEffect(() => {
+    if (_.lowerCase(dialogState.input) == _.lowerCase(dialogState.task.name)) {
+      setDialogState((prevState) => ({ ...prevState, disabled: false }));
+    } else {
+      setDialogState((prevState) => ({ ...prevState, disabled: true }));
+    }
+  }, [dialogState.input, dialogState.task.name]);
+
   const handleEdit = (id) => {};
   const handleDelete = (task) => {
-    setDialogTask(task);
-    setDialogOpen(true);
-    window.api.send("delete-task", id).then((data) => {
-      if (data.status === "success") {
-        alert("Task Deleted Successfully!");
-      } else {
-        alert("Error: " + data.message);
-      }
-    });
+    setDialogState((prevState) => ({ ...prevState, task: task, open: true }));
+    // window.api.send("delete-task", task.id).then((data) => {
+    //   if (data.status === "success") {
+    //     alert("Task Deleted Successfully!");
+    //   } else {
+    //     alert("Error: " + data.message);
+    //   }
+    // });
   };
 
   const handleOpenFolder = (location) => {
@@ -73,22 +84,45 @@ export default function Tasks() {
       )}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         <Dialog
-          isOpen={dialogOpen}
+          // isOpen={dialogOpen}
+          isOpen={dialogState.open}
           title="Delete Task"
           size="md"
-          onClose={() => setDialogOpen(false)}
+          onClose={() =>
+            setDialogState((prevState) => ({
+              ...prevState,
+              task: {},
+              input: "",
+              disabled: true,
+              open: false,
+            }))
+          }
         >
-          <form className="flex flex-col items-center gap-3">
-            <p className="self-start">
-              To confirm, type "{dialogTask.name}" in the box below?
+          <form className="flex flex-col items-center gap-3 ">
+            <p className="self-start text-white">
+              {/* To confirm, type "{dialogTask.name}" in the box below? */}
+              To confirm, type "{_.trim(dialogState.task.name)}" in the box
+              below?
             </p>
 
             <Input
               type="text"
-              value={dialogInput}
-              onChange={(e) => setDialogInput(e.target.value)}
+              // value={dialogInput}
+              value={dialogState.input}
+              // onChange={(e) => setDialogInput(e.target.value)}
+              onChange={(e) =>
+                setDialogState((prevState) => ({
+                  ...prevState,
+                  input: e.target.value,
+                }))
+              }
             />
-            <Button variant="danger" type="submit" className=" w-fit">
+            <Button
+              variant="danger"
+              type="submit"
+              className=" w-fit"
+              disabled={dialogState.disabled}
+            >
               Delete the task
             </Button>
           </form>
