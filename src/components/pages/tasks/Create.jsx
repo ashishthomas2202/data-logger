@@ -114,7 +114,7 @@ export default function CreateTask() {
           </div>
 
           <div className="flex flex-col items-start w-full ">
-            <h2 className="text-lg font-semibold">Fields</h2>
+            <h2 className="text-lg font-semibold">Fields:</h2>
           </div>
 
           {fields.map((field, index) => {
