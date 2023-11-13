@@ -4,6 +4,7 @@ const { mainWindow } = require("../../electron/main");
 const {
   getAppRegistry,
   addTaskToRegistry,
+  deleteTaskFromRegistry,
   resetAppRegistry,
   createFolder,
   createFile,
@@ -42,11 +43,13 @@ ipcMain.handle("create-task", async (event, taskData) => {
 
 ipcMain.handle(
   "delete-task",
-  async (event, { task = {}, deleteFolder = false }) => {
+  async (event, { task = {}, deleteFolder: df = false }) => {
     try {
-      if (deleteFolder) {
+      if (df) {
         deleteFolder(task?.location);
       }
+
+      deleteTaskFromRegistry(task);
 
       return { status: "success" };
     } catch (error) {
