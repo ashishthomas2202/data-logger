@@ -90,6 +90,11 @@ const createFile = (location, fileName, fileContent) => {
   fs.writeFileSync(filePath, fileContent, "utf8");
 };
 
+const loadFile = (location, fileName) => {
+  const filePath = path.join(location, fileName);
+  return fs.readFileSync(filePath, "utf8");
+};
+
 module.exports = {
   getAppRegistry,
   resetAppRegistry,
@@ -98,4 +103,5 @@ module.exports = {
   createFolder,
   deleteFolder,
   createFile,
+  loadFile,
 };

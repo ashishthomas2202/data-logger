@@ -1,11 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { TaskContext } from "../../../context/TaskContext";
+import { useNavigate } from "react-router-dom";
 import Page from "../../ui/Page";
 import Card from "../../ui/Card";
 import Button from "../../ui/Button";
 export default function Load() {
   const [location, setLocation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const { updateTasks } = useContext(TaskContext);
+  const navigate = useNavigate();
+  const loadTask = (location) => {
+    window.api
+      .send("load-task", location)
+      .then((data) => {
+        if (data.status === "success") {
+          updateTasks();
+          alert("Task Loaded Successfully!");
+          navigate("/tasks");
+        } else {
+          alert("Error: " + data.message);
+        }
+      })
+      .catch((error) => {
+        alert("Error: " + error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
   const handleChooseLocation = () => {
     window.api
       .send("choose-location")
@@ -26,6 +48,13 @@ export default function Load() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    if (location.length == 0) {
+      alert("Please choose a location to load the task data");
+      setIsLoading(false);
+    } else {
+      loadTask(location);
+    }
   };
   return (
     <Page>
@@ -35,7 +64,7 @@ export default function Load() {
           <div className="px-5 py-3 flex flex-col sm:flex-row justify-between items-center gap-3 outline outline-2 outline-white rounded-lg">
             <div className="w-full">
               <p className={location.length == 0 ? "" : "self-start"}>
-                Choose a folder location to save the task data
+                Choose a folder location to load the task data
               </p>
               <p className="text-ellipsis overflow-hidden text-xs text-pink-300">
                 {location}

@@ -8,6 +8,7 @@ const {
   resetAppRegistry,
   createFolder,
   createFile,
+  loadFile,
   deleteFolder,
 } = require("../registryUtils");
 
@@ -38,6 +39,24 @@ ipcMain.handle("create-task", async (event, taskData) => {
     return { status: "success", data: task };
   } catch (error) {
     return { status: "error", message: error.message };
+  }
+});
+
+ipcMain.handle("load-task", async (event, location) => {
+  try {
+    const data = loadFile(location, "data.json");
+    const task = JSON.parse(data);
+
+    const registry = getAppRegistry();
+
+    if (registry.tasks.find((t) => t.id === task.id)) {
+      return { status: "error", message: "Task already exists" };
+    }
+
+    addTaskToRegistry({ ...task, location: location });
+    return { status: "success", data: task };
+  } catch (error) {
+    return { status: "error", message: "Invalid Task Folder" };
   }
 });
 

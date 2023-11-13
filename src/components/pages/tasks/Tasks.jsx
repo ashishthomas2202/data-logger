@@ -75,14 +75,12 @@ export default function Tasks() {
       })
       .then((data) => {
         if (data.status === "success") {
+          closeDialog();
           updateTasks();
           alert("Task Deleted Successfully!");
         } else {
           alert("Error: " + data.message);
         }
-      })
-      .finally(() => {
-        closeDialog();
       });
   };
 
