@@ -135,7 +135,6 @@ export default function CreateTask() {
                     prevFields.filter((prevField) => prevField.id !== field.id)
                   )
                 }
-                onChange={() => {}}
               />
             );
           })}

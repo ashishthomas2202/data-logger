@@ -16,7 +16,7 @@ export default function Edit() {
     editTask ? editTask : { name: "", fields: [], location: "" }
   );
   const [selection, setSelection] = useState(editTask ? editTask.id : "");
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     console.log("Location", location);
     console.log("Edit Task", editTask);
@@ -30,6 +30,12 @@ export default function Edit() {
     }
   }, [selection]);
 
+  const handleReset = () => {
+    setTask((prevTask) => ({
+      ...tasks.filter((task) => task.id == prevTask.id)[0],
+    }));
+    alert("Reset changes successful!");
+  };
   const handleChooseLocation = () => {
     window.api
       .send("choose-location")
@@ -46,65 +52,128 @@ export default function Edit() {
         alert("Error: " + error.message);
       });
   };
-
   return (
     <Page>
       <h3 className="text-2xl font-bold mb-3">Edit Task</h3>
-      <Card>
-        <fieldset>
-          <div>
-            <label className="font-semibold">Select a task for editting:</label>
-            <Select value={selection} onChange={(value) => setSelection(value)}>
-              <option hidden>Choose a task...</option>
-              {tasks.map((task) => (
-                <option key={`option-${task.id}`} value={task.id}>
-                  {task.name}
-                </option>
-              ))}
-            </Select>
-          </div>
-        </fieldset>
-
-        <fieldset
-          className={`transition ease-in-out duration-700 ${
-            selection == ""
-              ? "max-h-0 overflow-hidden opacity-0 "
-              : "max-h-[100vh] opacity-100 border-2 px-3 py-4 rounded-lg mt-3 flex flex-col gap-3"
-          } `}
-        >
-          <div>
-            <label className="font-semibold">Task Name:</label>
-            <Input value={task.name} />
-          </div>
-
-          <div>
-            <label className="font-semibold">Task Location:</label>
-            {/* <Input value={task.location} /> */}
-            <div className="flex justify-between items-center bg-indigo-900 rounded-lg px-2 py-2">
-              <p className="text-pink-300 text-sm">{task.location}</p>
-              <Button onClick={handleChooseLocation}>Choose Location</Button>
+      <Card className="xl:px-28 xl-py lg:text-lg">
+        <form className="flex flex-col justify-center">
+          {" "}
+          <fieldset className="flex flex-col justify-between items-center md:flex-row md:items-start gap-3">
+            <div className="w-full">
+              <label className="font-semibold">
+                Select a task for editting:
+              </label>
+              <Select
+                value={selection}
+                onChange={(value) => setSelection(value)}
+              >
+                <option hidden>Choose a task...</option>
+                {tasks.map((task) => (
+                  <option key={`option-${task.id}`} value={task.id}>
+                    {task.name}
+                  </option>
+                ))}
+              </Select>
             </div>
-          </div>
+            <Button
+              className="w-full md:w-60 md:mt-6 py-4.5 lg:mt-7"
+              onClick={handleReset}
+            >
+              Reset Changes
+            </Button>
+          </fieldset>
+          <fieldset
+            className={`w-full self-center transition ease-in-out duration-700 ${
+              selection == ""
+                ? "max-h-0 overflow-hidden opacity-0 "
+                : "max-h-full opacity-100 border-2 px-3 py-4 xl:px-28 xl:py-10 rounded-lg mt-3 flex flex-col gap-3"
+            } `}
+          >
+            <div className="w-full">
+              <label className="font-semibold">Task Name:</label>
+              <Input value={task.name} />
+            </div>
 
-          <div>
-            <p className="font-semibold mb-4">Fields:</p>
-            {task.fields.map((field, i) => (
-              <Field
-                key={`edit-${field.id}`}
-                id={field.id}
-                field={field}
-                handleChange={(newData) =>
-                  setTask((prevTask) => ({
-                    ...prevTask,
-                    fields: prevTask.fields.map((prevField) =>
-                      prevField.id == field.id ? newData : prevField
-                    ),
-                  }))
-                }
-              />
-            ))}
-          </div>
-        </fieldset>
+            <div className="w-full">
+              <label className="font-semibold">Task Location:</label>
+              <div className="flex flex-col md:flex-row justify-between items-center bg-indigo-900 rounded-lg px-2 py-2 gap-3 overflow-hidden">
+                <p
+                  className="w-[50vw] md:w-full truncate text-pink-300 text-sm lg:text-lg"
+                  title={task.location}
+                >
+                  {task.location}
+                </p>
+                <Button
+                  className="w-full md:w-6/12"
+                  onClick={handleChooseLocation}
+                >
+                  Choose Location
+                </Button>
+              </div>
+            </div>
+
+            <div className="w-full flex flex-col gap-3">
+              <p className="font-semibold mb-4">Fields:</p>
+              {task.fields.length == 0 && (
+                <p className="text-center mb-5">No Fields Exist</p>
+              )}
+              {task.fields.map((field, i) => (
+                <Field
+                  key={`edit-${field.id}`}
+                  id={field.id}
+                  field={field}
+                  handleChange={(newData) =>
+                    setTask((prevTask) => ({
+                      ...prevTask,
+                      fields: prevTask.fields.map((prevField) =>
+                        prevField.id == field.id ? newData : prevField
+                      ),
+                    }))
+                  }
+                  handleRemove={() => {
+                    setTask((prevTask) => ({
+                      ...prevTask,
+                      fields: [
+                        ...prevTask.fields.filter(
+                          (prevField) => prevField.id !== field.id
+                        ),
+                      ],
+                    }));
+                  }}
+                />
+              ))}
+            </div>
+            <Button
+              className="w-full md:w-1/2 self-center"
+              variant="secondary"
+              onClick={() => {
+                setTask((prevTask) => ({
+                  ...prevTask,
+                  fields: [
+                    ...prevTask.fields,
+                    {
+                      id: `${new Date().getTime()}`,
+                      name: "",
+                      type: "",
+                      required: false,
+                    },
+                  ],
+                }));
+              }}
+            >
+              Add Fields
+            </Button>
+          </fieldset>
+          <Button
+            className={`w-full md:w-1/2 mt-6 self-center ${
+              selection == "" ? "opacity-0 hidden" : "opacity-100 block"
+            }`}
+            type="submit"
+            loading={isLoading}
+          >
+            Save Changes
+          </Button>
+        </form>
       </Card>
     </Page>
   );

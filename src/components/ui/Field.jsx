@@ -17,7 +17,7 @@ export default function Field({
       className={`px-5 py-5 flex flex-col border-2 sm:border-0 rounded-lg sm:flex-row sm:gap-3 sm:py-0 ${className}`}
     >
       <div className="flex flex-col flex-1 items-center w-full mr-3">
-        <label htmlFor={"required" + id} className="text-sm">
+        <label htmlFor={"required" + id} className="text-sm lg:text-lg">
           Required:
         </label>
         <Checkbox
@@ -30,7 +30,7 @@ export default function Field({
         />
       </div>
       <div className="flex flex-col items-start w-full">
-        <label htmlFor={"fieldname" + id} className="text-sm">
+        <label htmlFor={"fieldname" + id} className="text-sm lg:text-lg">
           Field Name:
         </label>
         <Input
@@ -46,7 +46,7 @@ export default function Field({
         />
       </div>
       <div className="flex flex-col items-start w-full ">
-        <label htmlFor={"fieldtype" + id} className="text-sm">
+        <label htmlFor={"fieldtype" + id} className="text-sm lg:text-lg">
           Field Type:
         </label>
         <Select
@@ -76,7 +76,7 @@ export default function Field({
           Remove
         </button> */}
         <Button
-          className="w-full mt-5 py-3.5"
+          className="w-full mt-5 py-3.5 lg:mt-7"
           variant="danger"
           onClick={handleRemove}
         >
