@@ -20,7 +20,7 @@ export default function Tasks() {
     deleteFolder: false,
     disabledButton: true,
   });
-  const { tasks } = useContext(TaskContext);
+  const { tasks, updateTasks } = useContext(TaskContext);
   // const [tasks, setTasks] = useState([]);
 
   // function getTasks() {
@@ -61,6 +61,7 @@ export default function Tasks() {
       task: {},
       input: "",
       disabledButton: true,
+      deleteFolder: false,
       open: false,
     }));
   };
@@ -74,6 +75,7 @@ export default function Tasks() {
       })
       .then((data) => {
         if (data.status === "success") {
+          updateTasks();
           alert("Task Deleted Successfully!");
         } else {
           alert("Error: " + data.message);

@@ -46,7 +46,11 @@ ipcMain.handle(
   async (event, { task = {}, deleteFolder: df = false }) => {
     try {
       if (df) {
-        deleteFolder(task?.location);
+        try {
+          deleteFolder(task?.location);
+        } catch (e) {
+          console.log("Error: ", e);
+        }
       }
 
       deleteTaskFromRegistry(task);

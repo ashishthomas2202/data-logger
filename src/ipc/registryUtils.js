@@ -82,7 +82,7 @@ const deleteFolder = (folderPath) => {
     fs.rmdirSync(folderPath);
     console.log(`Deleted folder: ${folderPath}`);
   } else {
-    throw new Error(`Folder does not exist: ${folderPath}`);
+    throw new Error(`Folder does not exist: \n${folderPath}`);
   }
 };
 const createFile = (location, fileName, fileContent) => {
