@@ -7,7 +7,7 @@ import Settings from "./components/pages/Settings";
 import Initialize from "./components/pages/Initialize";
 import Tasks from "./components/pages/tasks/Tasks";
 import CreateTask from "./components/pages/tasks/Create";
-import ManageTask from "./components/pages/tasks/Manage";
+import LoadTask from "./components/pages/tasks/Load";
 import UpdateTask from "./components/pages/tasks/Update";
 import DeleteTask from "./components/pages/tasks/Delete";
 import { TaskContextProvider } from "./context/TaskContext";
@@ -15,7 +15,7 @@ import {
   BsGrid,
   BsListNested,
   BsPlusCircle,
-  BsBook,
+  BsUpload,
   BsArrowRepeat,
   BsTrash,
   BsGear,
@@ -29,7 +29,7 @@ function App() {
       icon: <BsListNested />,
       links: [
         { name: "Create", to: "/tasks/create", icon: <BsPlusCircle /> },
-        { name: "Manage", to: "/tasks/manage", icon: <BsBook /> },
+        { name: "Load", to: "/tasks/load", icon: <BsUpload /> },
         { name: "Update", to: "/tasks/update", icon: <BsArrowRepeat /> },
         { name: "Delete", to: "/tasks/delete", icon: <BsTrash /> },
       ],
@@ -51,7 +51,7 @@ function App() {
               <Route path="/initialize" element={<Initialize />} />
               <Route exact path="/tasks" element={<Tasks />} />
               <Route exact path="/tasks/create" element={<CreateTask />} />
-              <Route exact path="/tasks/manage" element={<ManageTask />} />
+              <Route exact path="/tasks/load" element={<LoadTask />} />
               <Route exact path="/tasks/update" element={<UpdateTask />} />
               <Route exact path="/tasks/delete" element={<DeleteTask />} />
             </Routes>
