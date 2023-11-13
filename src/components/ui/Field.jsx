@@ -7,12 +7,10 @@ import { FaTimes } from "react-icons/fa";
 
 export default function Field({
   field,
-  setFields,
   id,
   className = "",
   handleChange,
   handleRemove,
-  onChange,
 }) {
   return (
     <div

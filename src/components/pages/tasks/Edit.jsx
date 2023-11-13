@@ -90,7 +90,8 @@ export default function Edit() {
             <p className="font-semibold mb-4">Fields:</p>
             {task.fields.map((field, i) => (
               <Field
-                key={`field-${field.id}`}
+                key={`edit-${field.id}`}
+                id={field.id}
                 field={field}
                 handleChange={(newData) =>
                   setTask((prevTask) => ({
