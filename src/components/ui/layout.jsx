@@ -24,7 +24,7 @@ export default function Layout({ children, links }) {
       className="flex w-screen h-screen overflow-y-hidden dark:bg-gray-950 text-indigo-950 dark:text-white"
     >
       <SideNav links={links} />
-      <div className="w-full h-full overflow-y-auto ">
+      <div className="w-full h-screen overflow-y-auto ">
         {isLoading && (
           <div className="h-full flex justify-center items-center">
             <Loader animate />

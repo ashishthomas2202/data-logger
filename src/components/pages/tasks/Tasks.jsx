@@ -1,6 +1,6 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import _ from "lodash";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TaskContext } from "../../../context/TaskContext";
 import Page from "../../ui/Page";
 import Card from "../../ui/Card";
@@ -13,6 +13,8 @@ import Dialog from "../../ui/Dialog";
 import Checkbox from "../../ui/Checkbox";
 
 export default function Tasks() {
+  const navigate = useNavigate();
+
   const [dialogState, setDialogState] = useState({
     task: {},
     open: false,
@@ -30,7 +32,9 @@ export default function Tasks() {
     }
   }, [dialogState.input, dialogState.task.name]);
 
-  const handleEdit = (id) => {};
+  const handleEdit = (task) => {
+    navigate("/tasks/edit", { state: { task } });
+  };
   const handleDelete = (task) => {
     setDialogState((prevState) => ({ ...prevState, task: task, open: true }));
   };
@@ -180,7 +184,7 @@ export default function Tasks() {
                   <div className="flex gap-1">
                     <Button
                       className="px-2 h-2"
-                      onClick={() => handleEdit(task.id)}
+                      onClick={() => handleEdit(task)}
                     >
                       <BsPencil />
                     </Button>

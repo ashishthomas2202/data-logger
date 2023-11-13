@@ -55,10 +55,10 @@ export default function Select({
         </div>
       </div>
       <div
-        className="bg-white p-1 rounded-lg overflow-y-scroll w-full max-h-7 transition-all"
+        className="bg-white p-1 rounded-lg overflow-y-scroll w-full max-h-7 transition-all duration-200 "
         style={{
           marginTop: dropdownState ? "0.1rem" : "0",
-          visibility: dropdownState ? "visible" : "hidden",
+          visibility: dropdownState ? "visible" : "invisible",
           opacity: dropdownState ? 1 : 0,
           maxHeight: dropdownState ? "150px" : "0",
         }}
@@ -70,7 +70,7 @@ export default function Select({
                 <div
                   className={`${
                     value == option.value && "bg-slate-200 dark:bg-gray-50"
-                  } bg-white hover:bg-gray-50 dark:hover:bg-gray-200 text-center py-2 cursor-pointer transition-all`}
+                  } bg-white hover:bg-gray-50 dark:hover:bg-gray-200 text-center py-2 cursor-pointer transition-all ease-in-out`}
                   key={option.value + (props.key ? props.key : i)}
                   onClick={() => {
                     setSelected(i);
