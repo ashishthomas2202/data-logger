@@ -87,7 +87,6 @@ ipcMain.handle("choose-location", async (event) => {
       properties: ["openDirectory", "createDirectory"], // Allow users to open or create a directory
     });
 
-    console.log(location);
     if (location.canceled) {
       return {
         status: "canceled",

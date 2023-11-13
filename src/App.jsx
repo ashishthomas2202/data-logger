@@ -8,7 +8,7 @@ import Initialize from "./components/pages/Initialize";
 import Tasks from "./components/pages/tasks/Tasks";
 import CreateTask from "./components/pages/tasks/Create";
 import LoadTask from "./components/pages/tasks/Load";
-import UpdateTask from "./components/pages/tasks/Update";
+import EditTask from "./components/pages/tasks/Edit";
 import DeleteTask from "./components/pages/tasks/Delete";
 import { TaskContextProvider } from "./context/TaskContext";
 import {
@@ -16,7 +16,7 @@ import {
   BsListNested,
   BsPlusCircle,
   BsUpload,
-  BsArrowRepeat,
+  BsPencilSquare,
   BsTrash,
   BsGear,
 } from "react-icons/bs";
@@ -30,7 +30,7 @@ function App() {
       links: [
         { name: "Create", to: "/tasks/create", icon: <BsPlusCircle /> },
         { name: "Load", to: "/tasks/load", icon: <BsUpload /> },
-        { name: "Update", to: "/tasks/update", icon: <BsArrowRepeat /> },
+        { name: "Edit", to: "/tasks/edit", icon: <BsPencilSquare /> },
         { name: "Delete", to: "/tasks/delete", icon: <BsTrash /> },
       ],
     },
@@ -52,7 +52,7 @@ function App() {
               <Route exact path="/tasks" element={<Tasks />} />
               <Route exact path="/tasks/create" element={<CreateTask />} />
               <Route exact path="/tasks/load" element={<LoadTask />} />
-              <Route exact path="/tasks/update" element={<UpdateTask />} />
+              <Route exact path="/tasks/edit" element={<EditTask />} />
               <Route exact path="/tasks/delete" element={<DeleteTask />} />
             </Routes>
           </Layout>

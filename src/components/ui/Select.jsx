@@ -6,7 +6,7 @@ export default function Select({
   id,
   className = "",
   value,
-  onChange,
+  onChange = () => {},
   required,
   ...props
 }) {
@@ -45,7 +45,7 @@ export default function Select({
         className="bg-white rounded-lg flex space-between items-center p-4"
         onClick={handleClick}
       >
-        <div className="flex-1 text-center">{options[selected].value}</div>
+        <div className="flex-1 text-center">{options[selected].text}</div>
         <div
           style={{
             transform: dropdownState ? "rotate(180deg)" : "rotate(0deg)",
@@ -78,7 +78,7 @@ export default function Select({
                     onChange(option.value);
                   }}
                 >
-                  {option.value}
+                  {option.text}
                 </div>
               );
           })}

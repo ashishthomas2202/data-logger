@@ -21,26 +21,6 @@ export default function Tasks() {
     disabledButton: true,
   });
   const { tasks, updateTasks } = useContext(TaskContext);
-  // const [tasks, setTasks] = useState([]);
-
-  // function getTasks() {
-  //   window.api
-  //     .send("get-all-tasks")
-  //     .then((data) => {
-  //       if (data.status === "success") {
-  //         setTasks(data.tasks);
-  //       } else {
-  //         alert("Error: " + data.message);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       alert("Error: " + error.message);
-  //     });
-  // }
-
-  // useEffect(() => {
-  //   console.log(tasks);
-  // }, [tasks]);
 
   useEffect(() => {
     if (_.lowerCase(dialogState.input) == _.lowerCase(dialogState.task.name)) {
@@ -86,7 +66,6 @@ export default function Tasks() {
 
   const handleOpenFolder = async (location) => {
     window.api.send("open-folder", location).then((data) => {
-      console.log(data);
       if (data.status !== "success") {
         alert("Error: " + data.message);
       }
@@ -194,7 +173,6 @@ export default function Tasks() {
 
         {tasks &&
           tasks.map((task) => {
-            // console.log(task);
             return (
               <Card key={task.id} className="flex flex-col gap-3">
                 <div className="flex justify-between items-center gap-2">
