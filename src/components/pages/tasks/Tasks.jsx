@@ -53,13 +53,35 @@ export default function Tasks() {
   const handleEdit = (id) => {};
   const handleDelete = (task) => {
     setDialogState((prevState) => ({ ...prevState, task: task, open: true }));
-    // window.api.send("delete-task", task.id).then((data) => {
-    //   if (data.status === "success") {
-    //     alert("Task Deleted Successfully!");
-    //   } else {
-    //     alert("Error: " + data.message);
-    //   }
-    // });
+  };
+
+  const closeDialog = () => {
+    setDialogState((prevState) => ({
+      ...prevState,
+      task: {},
+      input: "",
+      disabledButton: true,
+      open: false,
+    }));
+  };
+
+  const confirmDelete = (e) => {
+    e.preventDefault();
+    window.api
+      .send("delete-task", {
+        task: dialogState.task,
+        deleteFolder: dialogState.deleteFolder,
+      })
+      .then((data) => {
+        if (data.status === "success") {
+          alert("Task Deleted Successfully!");
+        } else {
+          alert("Error: " + data.message);
+        }
+      })
+      .finally(() => {
+        closeDialog();
+      });
   };
 
   const handleOpenFolder = async (location) => {
@@ -95,15 +117,7 @@ export default function Tasks() {
           isOpen={dialogState.open}
           title="Delete Task"
           size="lg"
-          onClose={() =>
-            setDialogState((prevState) => ({
-              ...prevState,
-              task: {},
-              input: "",
-              disabledButton: true,
-              open: false,
-            }))
-          }
+          onClose={closeDialog}
         >
           <p className="text-white mb-3">
             The task will be removed from the application but the "
@@ -115,7 +129,7 @@ export default function Tasks() {
             <br />
             <Button
               variant="clear"
-              className="text-sm text-violet-500 bg-red-300"
+              className="text-sm text-violet-500 h-2 mb-3"
               onClick={() => handleOpenFolder(dialogState.task.location)}
             >
               {dialogState.task.location}
@@ -156,9 +170,8 @@ export default function Tasks() {
 
             <Input
               type="text"
-              // value={dialogInput}
+              className="bg-gray-100"
               value={dialogState.input}
-              // onChange={(e) => setDialogInput(e.target.value)}
               onChange={(e) =>
                 setDialogState((prevState) => ({
                   ...prevState,
@@ -172,6 +185,7 @@ export default function Tasks() {
               type="submit"
               className=" w-fit"
               disabled={dialogState.disabledButton}
+              onClick={confirmDelete}
             >
               Delete the task
             </Button>

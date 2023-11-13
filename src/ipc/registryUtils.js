@@ -53,6 +53,25 @@ const createFolder = (location, folderName) => {
   }
 };
 
+const deleteFolder = (folderPath) => {
+  if (fs.existsSync(folderPath)) {
+    fs.readdirSync(folderPath).forEach((file) => {
+      const currentPath = path.join(folderPath, file);
+      if (fs.lstatSync(currentPath).isDirectory()) {
+        // Recurse if the current path is a directory
+        deleteFolderSync(currentPath);
+      } else {
+        // Delete file
+        fs.unlinkSync(currentPath);
+      }
+    });
+    // Remove directory after clearing all contents
+    fs.rmdirSync(folderPath);
+    console.log(`Deleted folder: ${folderPath}`);
+  } else {
+    throw new Error(`Folder does not exist: ${folderPath}`);
+  }
+};
 const createFile = (location, fileName, fileContent) => {
   const filePath = path.join(location, fileName);
   fs.writeFileSync(filePath, fileContent, "utf8");
@@ -64,4 +83,5 @@ module.exports = {
   addTaskToRegistry,
   createFolder,
   createFile,
+  deleteFolder,
 };

@@ -39,7 +39,7 @@ ipcMain.handle("create-task", async (event, taskData) => {
   }
 });
 
-ipcMain.handle("delete-task", async (event, id) => {
+ipcMain.handle("delete-task", async (event, { task, deleteFolder }) => {
   try {
     return { status: "success" };
   } catch (error) {
