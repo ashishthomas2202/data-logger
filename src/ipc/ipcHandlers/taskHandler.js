@@ -76,11 +76,17 @@ ipcMain.handle("get-all-tasks", async (event) => {
 });
 
 ipcMain.handle("open-folder", async (event, location) => {
-  try {
-    await shell.openPath(location);
+  // try {
+  //   await shell.openPath(location);
+  //   return { status: "success" };
+  // } catch (error) {
+  //   return { status: "error", message: error.message };
+  // }
+  let response = await shell.openPath(location);
+  if (response === "") {
     return { status: "success" };
-  } catch (error) {
-    return { status: "error", message: error.message };
+  } else {
+    return { status: "error", message: response };
   }
 });
 

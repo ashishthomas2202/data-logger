@@ -62,8 +62,13 @@ export default function Tasks() {
     // });
   };
 
-  const handleOpenFolder = (location) => {
-    window.api.send("open-folder", location);
+  const handleOpenFolder = async (location) => {
+    window.api.send("open-folder", location).then((data) => {
+      console.log(data);
+      if (data.status !== "success") {
+        alert("Error: " + data.message);
+      }
+    });
   };
 
   return (
@@ -89,7 +94,7 @@ export default function Tasks() {
           // isOpen={dialogOpen}
           isOpen={dialogState.open}
           title="Delete Task"
-          size="md"
+          size="lg"
           onClose={() =>
             setDialogState((prevState) => ({
               ...prevState,
@@ -100,11 +105,53 @@ export default function Tasks() {
             }))
           }
         >
+          <p className="text-white mb-3">
+            The task will be removed from the application but the "
+            <span className="font-semibold text-violet-500">
+              {dialogState.task.name}
+            </span>
+            " data folder will not be affected and will remain on your desktop
+            at:
+            <br />
+            <Button
+              variant="clear"
+              className="text-sm text-violet-500 bg-red-300"
+              onClick={() => handleOpenFolder(dialogState.task.location)}
+            >
+              {dialogState.task.location}
+            </Button>
+            To permanently delete the task folder and all its contents, please
+            tick the checkbox below.
+            <br />{" "}
+            <span className="text-red-500 text-sm">
+              Note: This action is irreversible and will result in permanent
+              loss of data within the task folder.
+            </span>
+          </p>
           <form className="flex flex-col items-center gap-3 ">
+            <div className="flex self-start">
+              <Checkbox
+                value={dialogState.deleteFolder}
+                onChange={(e) => {
+                  setDialogState((prevState) => ({
+                    ...prevState,
+                    deleteFolder: !prevState.deleteFolder,
+                  }));
+                }}
+              />
+              <label className="pl-3 text-white">
+                Delete Task Folder? (Permanent)
+              </label>
+            </div>
+
             <label className="self-start text-white">
               {/* To confirm, type "{dialogTask.name}" in the box below? */}
-              To confirm, type "{_.trim(dialogState.task.name)}" in the box
-              below?
+              For confirmation and to proceed with deletion, type "
+              <span className="font-bold text-violet-500">
+                {_.trim(dialogState.task.name)}
+              </span>
+              " in the text box below. into the input field below to verify your
+              action.
             </label>
 
             <Input
@@ -119,19 +166,6 @@ export default function Tasks() {
                 }))
               }
             />
-
-            <div className="flex self-start">
-              <Checkbox
-                value={dialogState.deleteFolder}
-                onChange={(e) => {
-                  setDialogState((prevState) => ({
-                    ...prevState,
-                    deleteFolder: !prevState.deleteFolder,
-                  }));
-                }}
-              />
-              <label className="pl-3">Delete Task Folder? (Permanent)</label>
-            </div>
 
             <Button
               variant="danger"
