@@ -43,6 +43,19 @@ const addTaskToRegistry = (taskData) => {
   );
 };
 
+// Function to delete a task from the app registry
+const deleteTaskFromRegistry = (taskData) => {
+  const registryData = getAppRegistry();
+  registryData.tasks = registryData.tasks.filter(
+    (task) => task.id !== taskData.id
+  );
+  fs.writeFileSync(
+    appRegistryFilePath,
+    JSON.stringify(registryData, null, 2),
+    "utf8"
+  );
+};
+
 const createFolder = (location, folderName) => {
   // Construct folder path
   const folderPath = path.join(location, folderName);
@@ -81,7 +94,8 @@ module.exports = {
   getAppRegistry,
   resetAppRegistry,
   addTaskToRegistry,
+  deleteTaskFromRegistry,
   createFolder,
-  createFile,
   deleteFolder,
+  createFile,
 };

@@ -7,6 +7,7 @@ const {
   resetAppRegistry,
   createFolder,
   createFile,
+  deleteFolder,
 } = require("../registryUtils");
 
 ipcMain.handle("create-task", async (event, taskData) => {
@@ -39,13 +40,20 @@ ipcMain.handle("create-task", async (event, taskData) => {
   }
 });
 
-ipcMain.handle("delete-task", async (event, { task, deleteFolder }) => {
-  try {
-    return { status: "success" };
-  } catch (error) {
-    return { status: "error", message: error.message };
+ipcMain.handle(
+  "delete-task",
+  async (event, { task = {}, deleteFolder = false }) => {
+    try {
+      if (deleteFolder) {
+        deleteFolder(task?.location);
+      }
+
+      return { status: "success" };
+    } catch (error) {
+      return { status: "error", message: error.message };
+    }
   }
-});
+);
 
 ipcMain.handle("choose-location", async (event) => {
   try {
