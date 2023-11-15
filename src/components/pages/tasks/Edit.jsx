@@ -7,6 +7,8 @@ import Select from "../../ui/Select";
 import Input from "../../ui/Input";
 import Button from "../../ui/Button";
 import Field from "../../ui/Field";
+import Dialog from "../../ui/Dialog";
+import { indexOf } from "lodash";
 export default function Edit() {
   const location = useLocation();
   const editTask = location?.state?.task;
@@ -15,8 +17,14 @@ export default function Edit() {
   const [task, setTask] = useState(
     editTask ? editTask : { name: "", fields: [], location: "" }
   );
+  const [originalTask, setOriginalTask] = useState({});
   const [selection, setSelection] = useState(editTask ? editTask.id : "");
   const [isLoading, setIsLoading] = useState(false);
+  const [dialogState, setDialogState] = useState({
+    changes: {},
+    open: false,
+  });
+
   useEffect(() => {
     console.log("Location", location);
     console.log("Edit Task", editTask);
@@ -26,14 +34,32 @@ export default function Edit() {
   useEffect(() => {
     if (selection !== "") {
       let taskData = tasks.find((task) => task.id == selection);
+
+      taskData = {
+        ...taskData,
+        location: taskData.location.slice(
+          0,
+          taskData.location.lastIndexOf("/")
+        ),
+      };
+
+      console.log("taskData", taskData);
+
       setTask(taskData);
+      setOriginalTask(taskData);
     }
   }, [selection]);
 
   const handleReset = () => {
-    setTask((prevTask) => ({
-      ...tasks.filter((task) => task.id == prevTask.id)[0],
-    }));
+    let taskData = tasks.find((task) => task.id == selection);
+
+    taskData = {
+      ...taskData,
+      location: taskData.location.slice(0, taskData.location.lastIndexOf("/")),
+    };
+
+    setTask((prevTask) => ({ ...taskData }));
+
     alert("Reset changes successful!");
   };
   const handleChooseLocation = () => {
@@ -52,11 +78,130 @@ export default function Edit() {
         alert("Error: " + error.message);
       });
   };
+
+  const closeDialog = () => {
+    setDialogState((prevState) => ({ ...prevState, open: false }));
+    setIsLoading(false);
+  };
+
+  const findChanges = () => {
+    const changes = {
+      name: {},
+      location: {},
+      fields: [],
+    };
+
+    if (task.name !== originalTask.name) {
+      changes["name"] = {
+        old: originalTask.name,
+        new: task.name,
+      };
+    }
+    if (task.location !== originalTask.location) {
+      changes["location"] = {
+        old: originalTask.location,
+        new: task.location,
+      };
+    }
+
+    //
+    //             },
+    //           ];
+    //         } else {
+    //           changes["fiedls"] = [...changes["fields"]];
+    //         }
+
+    //         changes={
+    //           ...changes,
+    //           id: field.id,  {
+    //           name: {
+    //             id: field.id,
+    //             old: originalField.name,
+    //             new: field.name,
+    //           },
+    //         }
+    //       };
+    // }
+    //       if (field.type !== originalField.type) {
+    //         changes["fields"][field.id] = {
+    //           type: {
+    //             id: field.id,
+    //             old: originalField.type,
+    //             new: field.type,
+    //           },
+    //         };
+    //       }
+    //       if (field.required !== originalField.required) {
+    //         changes["fields"] = {
+    //           id: field.id,
+    //           required: {
+    //             old: originalField.required,
+    //             new: field.required,
+    //           },
+    //         };
+    //       }
+    //     }
+    //   });
+    // });
+
+    let addedFields = [];
+    let deletedFields = [];
+    let changedFields = [];
+
+    task.fields.forEach((field) => {
+      let found = false;
+
+      originalTask.fields.forEach((originalField) => {
+        if (field.id == originalField.id) {
+          let changedFieldName = [];
+          if (field.name !== originalField.name) {
+            changedFieldName.push("name");
+          }
+          if (field.type !== originalField.type) {
+            changedFieldName.push("type");
+          }
+          if (field.required !== originalField.required) {
+            changedFieldName.push("required");
+          }
+
+          if (changedFieldName.length > 0) {
+            let data = {
+              id: field.id,
+              originalValue: originalField,
+              newValue: field,
+            };
+            data["field"] = changedFieldName;
+            changedFields.push(data);
+            found = true;
+          }
+        }
+      });
+
+      if (!found) {
+        addedFields.push(field);
+      }
+    });
+
+    console.log("addedFields", addedFields);
+    console.log("deletedFields", deletedFields);
+    console.log("changedFields", changedFields);
+    console.log("changes", changes);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    setDialogState((prevState) => ({
+      ...prevState,
+      changes: findChanges(),
+      open: true,
+    }));
+  };
   return (
     <Page>
       <h3 className="text-2xl font-bold mb-3">Edit Task</h3>
       <Card className="xl:px-28 xl-py lg:text-lg">
-        <form className="flex flex-col justify-center">
+        <form className="flex flex-col justify-center" onSubmit={handleSubmit}>
           {" "}
           <fieldset className="flex flex-col justify-between items-center md:flex-row md:items-start gap-3">
             <div className="w-full">
@@ -91,7 +236,15 @@ export default function Edit() {
           >
             <div className="w-full">
               <label className="font-semibold">Task Name:</label>
-              <Input value={task.name} />
+              <Input
+                value={task.name}
+                onChange={(e) => {
+                  setTask((prevTask) => ({
+                    ...prevTask,
+                    name: e.target.value,
+                  }));
+                }}
+              />
             </div>
 
             <div className="w-full">
@@ -114,7 +267,7 @@ export default function Edit() {
 
             <div className="w-full flex flex-col gap-3">
               <p className="font-semibold mb-4">Fields:</p>
-              {task.fields.length == 0 && (
+              {task?.fields?.length == 0 && (
                 <p className="text-center mb-5">No Fields Exist</p>
               )}
               {task.fields.map((field, i) => (
@@ -164,6 +317,12 @@ export default function Edit() {
               Add Fields
             </Button>
           </fieldset>
+          <Dialog
+            isOpen={dialogState.open}
+            title="Update Task"
+            size="lg"
+            onClose={closeDialog}
+          ></Dialog>
           <Button
             className={`w-full md:w-1/2 mt-6 self-center ${
               selection == "" ? "opacity-0 hidden" : "opacity-100 block"

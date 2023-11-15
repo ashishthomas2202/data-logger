@@ -22,8 +22,11 @@ export default function Select({
     let valueIndex = optionsList.findIndex((option) => option.value == value);
     if (valueIndex == -1) {
       valueIndex = 0;
+      onChange(optionsList[0].value);
     }
     setSelected(valueIndex);
+
+    console.log("selectedIndex:", valueIndex, value);
   }, []);
 
   const handleClick = () => {
@@ -43,7 +46,10 @@ export default function Select({
       </select>
       <div
         className="bg-white rounded-lg flex space-between items-center p-4"
-        onClick={handleClick}
+        onClick={(e) => {
+          console.log("select:", value);
+          handleClick(e);
+        }}
       >
         <div className="flex-1 text-center">{options[selected].text}</div>
         <div
